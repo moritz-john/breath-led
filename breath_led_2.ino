@@ -148,60 +148,34 @@ void loop() {
     return;
   }
 
-  // Phase timing
-  // unsigned long duration = exercises[currentExercise].phases[currentPhase] *
-  // 1000L; float progress = (float)(now - startTime) / duration;
+  // Breathe Phase Loop
+  // 1. Get the duration of the current phase in milliseconds
+  unsigned long duration = exercises[currentExercise].phases[currentPhase] * 1000L;
+  // 2. Check if the current phase has ended
+  if (now - startTime >= duration) {
 
-  // if (progress >= 1.0f) // Phase has finished
-  // {
-  //   do
-  //   {
-  //     currentPhase = (currentPhase + 1) % 4;
-  //   } while (exercises[currentExercise].phases[currentPhase] == 0);
-
-  //   if (currentPhase == 0)
-  //   {
-  //     currentRepeat++;
-  //     if (currentRepeat >= exercises[currentExercise].repeats)
-  //     {
-  //       running = false;
-  //       lastActivityTime = millis();
-  //       showIndicator();
-  //       return;
-  //     }
-  //   }
-  //   startTime = now;
-  //   return;
-  // }
-
-  // Phase timing
-  unsigned long duration = exercises[currentExercise].phases[currentPhase] * 1000L; // convert to milliseconds to match millis()
-  // Normalized 0.0→1.0 progress through the current breath phase, used for LED animation below
-  float progress = (float)(now - startTime) / duration;
-
-  if (progress >=
-      1.0f) // Phase is complete; caught on the next loop() tick after expiry
-  {
-    // Advance at least once, then keep skipping any zero-duration phases (e.g. HOLD_IN = 0 seconds)
+    // Advance (at least once) to the next phase, skipping any that are 0 seconds long
     do {
       currentPhase = (currentPhase + 1) % 4; // % 4 wraps 3→0 to keep cycling
     } while (exercises[currentExercise].phases[currentPhase] == 0);
-
-    // Wrapped back to Inhale → one full breath cycle just finished
+    // 3. If we wrapped back to Inhale (phase 0), a full cycle is complete
     if (currentPhase == 0) {
       currentRepeat++;
-      if (currentRepeat >=
-          exercises[currentExercise].repeats) // All cycles done
-      {
+
+      // Stop the exercise if all repeats are done
+      if (currentRepeat >= exercises[currentExercise].repeats) {
         running = false;
         lastActivityTime = millis(); // Reset sleep timer
         showIndicator();
         return;
       }
     }
-    startTime = now; // Start measuring the new phase from this exact tick
-    return;          // Skip rendering — let next loop() call draw the fresh phase
+    // Advance by exactly one duration to avoid accumulating loop jitter
+    startTime += duration;
+    return;
   }
+  // 4. Normalized 0.0→1.0 progress through the current breath phase; only computed if still active
+  float progress = (float)(now - startTime) / duration;
 
   // Rendering
   strip.clear();
