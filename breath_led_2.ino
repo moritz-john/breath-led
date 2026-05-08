@@ -40,6 +40,9 @@ Exercise exercises[] = {
 
 const int NUM_EXERCISE = sizeof(exercises) / sizeof(exercises[0]);
 
+// TODO: evaluate battery savings
+const int FRAME_INTERVAL = 50; // ~ 20 FPS (1000ms / 50)
+
 // --- Hardware & State ---
 Adafruit_NeoPixel strip(NUM_LEDS, LED_PIN, NEO_GRB + NEO_KHZ800);
 Xiao battery;
@@ -53,6 +56,7 @@ int currentRepeat = 0;
 bool running = false;
 unsigned long startTime = 0;
 unsigned long lastActivityTime = 0;
+unsigned long lastFrameTime = 0; // Frame limiter - tracks last LED update time
 
 // --- Helpers ---
 void showIndicator() {
@@ -92,6 +96,7 @@ void onStartClick() {
   currentRepeat = 0;
   startTime = millis();
   lastActivityTime = millis();
+  lastFrameTime = millis(); // Initialize frame timer on exercise start
   if (!running)
     showIndicator();
 }
@@ -176,31 +181,54 @@ void loop() {
     return;                // Skip rendering here — let the next loop() tick draw the fresh phase
   }
 
-  // 2) Rendering Phase
-  // Normalized 0.0→1.0 progress through the current breath phase; only computed if still active, used for LED animation below
-  float progress = (float)(now - startTime) / duration;
+  // 2) Rendering Phase: Capped to FRAME_INTERVAL
+  if (now - lastFrameTime >= FRAME_INTERVAL) {
+    lastFrameTime = now;
 
-  strip.clear();
-  for (int i = 0; i < NUM_LEDS; i++) {
-    uint8_t r = 0, g = 0, b = 0;
-    if (currentPhase == 0) { // INHALE
-      float intensity = constrain(progress * NUM_LEDS - i, 0.0f, 1.0f);
-      r = COLOR_INHALE[0] * intensity;
-      g = COLOR_INHALE[1] * intensity;
-      b = COLOR_INHALE[2] * intensity;
-    } else if (currentPhase == 2) { // EXHALE
-      float intensity = constrain((1.0f - progress) * NUM_LEDS - i, 0.0f, 1.0f);
-      r = COLOR_EXHALE[0] * intensity;
-      g = COLOR_EXHALE[1] * intensity;
-      b = COLOR_EXHALE[2] * intensity;
-    } else { // HOLD_IN & HOLD_OUT
-      if (i % 2 != 0) {
-        r = COLOR_HOLD[0];
-        g = COLOR_HOLD[1];
-        b = COLOR_HOLD[2];
+    // Normalized 0.0→1.0 progress through the current breath phase; only computed if still active, used for LED animation below
+    float progress = (float)(now - startTime) / duration;
+
+    strip.clear();
+
+    for (int i = 0; i < NUM_LEDS; i++) {
+      uint8_t r = 0, g = 0, b = 0;
+      if (currentPhase == 0) { // INHALE
+        float intensity = constrain(progress * NUM_LEDS - i, 0.0f, 1.0f);
+        r = COLOR_INHALE[0] * intensity;
+        g = COLOR_INHALE[1] * intensity;
+        b = COLOR_INHALE[2] * intensity;
+      } else if (currentPhase == 2) { // EXHALE
+        float intensity = constrain((1.0f - progress) * NUM_LEDS - i, 0.0f, 1.0f);
+        r = COLOR_EXHALE[0] * intensity;
+        g = COLOR_EXHALE[1] * intensity;
+        b = COLOR_EXHALE[2] * intensity;
+      } else { // HOLD_IN & HOLD_OUT
+        if (i % 2 != 0) {
+          r = COLOR_HOLD[0];
+          g = COLOR_HOLD[1];
+          b = COLOR_HOLD[2];
+        }
       }
+      strip.setPixelColor(i, r, g, b);
     }
-    strip.setPixelColor(i, r, g, b);
+
+    strip.show();
   }
-  strip.show();
 }
+
+// loop() tick:
+// │
+// ├─ [1] LOGIC PHASE (uncapped - runs every tick for timing precision)
+// │   ├─ Compute phase duration
+// │   └─ Phase elapsed?
+// │       ├─ Advance phase (skip zero-duration phases)
+// │       ├─ Full cycle done? → increment repeat, check if finished
+// │       └─ startTime += duration → return (skip render this tick)
+// │
+// └─ [2] RENDERING PHASE (capped to FRAME_INTERVAL - saves power)
+//     └─ Frame interval elapsed?
+//         ├─ Compute progress (0.0→1.0)
+//         ├─ Inhale:  fill LEDs 0→N with COLOR_INHALE
+//         ├─ Exhale:  fill LEDs N→0 with COLOR_EXHALE
+//         ├─ Hold:    odd LEDs lit with COLOR_HOLD
+//         └─ strip.show()
