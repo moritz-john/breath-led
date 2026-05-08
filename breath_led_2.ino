@@ -92,6 +92,7 @@ void goToSleep() {
 // --- Button Callbacks ---
 void onStartClick() {
   running = !running;
+  // Reset state variables regardless of start/stop for clean next exercise
   currentPhase = 0;
   currentRepeat = 0;
   startTime = millis();
@@ -192,12 +193,12 @@ void loop() {
 
     for (int i = 0; i < NUM_LEDS; i++) {
       uint8_t r = 0, g = 0, b = 0;
-      if (currentPhase == 0) { // INHALE
+      if (currentPhase == 0) { // INHALE - wave fills left to right
         float intensity = constrain(progress * NUM_LEDS - i, 0.0f, 1.0f);
         r = COLOR_INHALE[0] * intensity;
         g = COLOR_INHALE[1] * intensity;
         b = COLOR_INHALE[2] * intensity;
-      } else if (currentPhase == 2) { // EXHALE
+      } else if (currentPhase == 2) { // EXHALE - wave drains right to left
         float intensity = constrain((1.0f - progress) * NUM_LEDS - i, 0.0f, 1.0f);
         r = COLOR_EXHALE[0] * intensity;
         g = COLOR_EXHALE[1] * intensity;
