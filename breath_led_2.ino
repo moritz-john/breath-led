@@ -145,24 +145,25 @@ void loop() {
   if (!running) {
     if (now - lastActivityTime > SLEEP_TIMEOUT)
       goToSleep();
-    return;
+    return; // Not running - skip all breathing logic below
   }
 
-  // Breathe Phase Loop
-  // 1. Get the duration of the current phase in milliseconds
+  // 1) Logic Phase: Always runs
+  // Get the duration of the current phase in milliseconds to match millis()
   unsigned long duration = exercises[currentExercise].phases[currentPhase] * 1000L;
-  // 2. Check if the current phase has ended
+  // Check whether the current breath phase duration has elapsed
   if (now - startTime >= duration) {
 
-    // Advance (at least once) to the next phase, skipping any that are 0 seconds long
+    // Advance at least once, then keep skipping any zero-duration phases (e.g. HOLD_IN = 0 seconds)
     do {
       currentPhase = (currentPhase + 1) % 4; // % 4 wraps 3→0 to keep cycling
     } while (exercises[currentExercise].phases[currentPhase] == 0);
-    // 3. If we wrapped back to Inhale (phase 0), a full cycle is complete
+
+    // Wrapped back to Inhale (phase 0) → one full breath cycle just finished
     if (currentPhase == 0) {
       currentRepeat++;
 
-      // Stop the exercise if all repeats are done
+      // Stop the exercise once all configured repeats are complete
       if (currentRepeat >= exercises[currentExercise].repeats) {
         running = false;
         lastActivityTime = millis(); // Reset sleep timer
@@ -170,14 +171,15 @@ void loop() {
         return;
       }
     }
-    // Advance by exactly one duration to avoid accumulating loop jitter
-    startTime += duration;
-    return;
+
+    startTime += duration; // Advance by exactly one phase duration
+    return;                // Skip rendering here — let the next loop() tick draw the fresh phase
   }
-  // 4. Normalized 0.0→1.0 progress through the current breath phase; only computed if still active
+
+  // 2) Rendering Phase
+  // Normalized 0.0→1.0 progress through the current breath phase; only computed if still active, used for LED animation below
   float progress = (float)(now - startTime) / duration;
 
-  // Rendering
   strip.clear();
   for (int i = 0; i < NUM_LEDS; i++) {
     uint8_t r = 0, g = 0, b = 0;
