@@ -186,31 +186,31 @@ void loop() {
   if (now - lastFrameTime >= FRAME_INTERVAL) {
     lastFrameTime = now;
 
-    // Normalized 0.0→1.0 progress through the current breath phase; only computed if still active, used for LED animation below
+    // Normalized 0.0→1.0 progress through the current breath phase, used for LED animation below; only computed if still active
     float progress = (float)(now - startTime) / duration;
 
     strip.clear();
 
-    for (int i = 0; i < NUM_LEDS; i++) {
-      uint8_t r = 0, g = 0, b = 0;
-      if (currentPhase == 0) { // INHALE - wave fills left to right
-        float intensity = constrain(progress * NUM_LEDS - i, 0.0f, 1.0f);
-        r = COLOR_INHALE[0] * intensity;
-        g = COLOR_INHALE[1] * intensity;
-        b = COLOR_INHALE[2] * intensity;
-      } else if (currentPhase == 2) { // EXHALE - wave drains right to left
-        float intensity = constrain((1.0f - progress) * NUM_LEDS - i, 0.0f, 1.0f);
-        r = COLOR_EXHALE[0] * intensity;
-        g = COLOR_EXHALE[1] * intensity;
-        b = COLOR_EXHALE[2] * intensity;
-      } else { // HOLD_IN & HOLD_OUT
-        if (i % 2 != 0) {
-          r = COLOR_HOLD[0];
-          g = COLOR_HOLD[1];
-          b = COLOR_HOLD[2];
-        }
+    if (currentPhase == 0) { // INHALE - wave fills left to right
+      float ledProgress = progress * NUM_LEDS;
+      // loop through each LED and compute intensity based on distance from ledProgress
+      for (int i = 0; i < NUM_LEDS; i++) { 
+        // Clamps negatives (LED not reached yet) to 0 (off); caps >1 to 1 so multiplying by 255 stays in uint8_t bounds; 0–1 is between min and max brightness
+        float intensity = constrain(ledProgress - i, 0.0f, 1.0f);
+        strip.setPixelColor(i, COLOR_INHALE[0] * intensity, COLOR_INHALE[1] * intensity, COLOR_INHALE[2] * intensity);
       }
-      strip.setPixelColor(i, r, g, b);
+    } else if (currentPhase == 2) { // EXHALE - wave drains right to left
+      float ledProgress = (1.0f - progress) * NUM_LEDS;
+      for (int i = 0; i < NUM_LEDS; i++) {
+        // Mirrors inhale but reversed; same clamping logic applies
+        float intensity = constrain(ledProgress - i, 0.0f, 1.0f);
+        strip.setPixelColor(i, COLOR_EXHALE[0] * intensity, COLOR_EXHALE[1] * intensity, COLOR_EXHALE[2] * intensity);
+      }
+    } else { // HOLD_IN & HOLD_OUT
+      for (int i = 0; i < NUM_LEDS; i++) {
+        if (i % 2 != 0)
+          strip.setPixelColor(i, COLOR_HOLD[0], COLOR_HOLD[1], COLOR_HOLD[2]);
+      }
     }
 
     strip.show();
