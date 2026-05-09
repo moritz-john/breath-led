@@ -68,11 +68,10 @@ void showIndicator() {
 void showBatteryLevel() {
   // Voltage is a float (e.g. 3.85V); scaled ×100 and cast to int (e.g. 385) for use with map()
   int voltage = (int)(battery.GetBatteryVoltage() * 100);
-
-  // Convert 3.20V–4.20V to 1–NUM_LEDS LEDs; extrapolates if input is out of range
+  // Clamp input before mapping to guarantee map() stays within expected bounds
+  voltage = constrain(voltage, BATTERY_MIN, BATTERY_MAX);
+  // Convert 3.20V–4.20V to 1–NUM_LEDS LEDs
   int numLedsLit = map(voltage, BATTERY_MIN, BATTERY_MAX, 1, NUM_LEDS);
-  // Clamp result - map() extrapolation can push output below 1 or above NUM_LEDS
-  numLedsLit = constrain(numLedsLit, 1, NUM_LEDS);
 
   strip.clear();
   for (int i = 0; i < numLedsLit; i++)
