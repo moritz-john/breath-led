@@ -211,10 +211,12 @@ void loop() {
       }
     } else { // HOLD_IN & HOLD_OUT
       for (int i = 0; i < NUM_LEDS; i++) {
-        if (i % 2 != 0)
+        if (i % 2 == 0)
           strip.setPixelColor(i, COLOR_HOLD[0], COLOR_HOLD[1], COLOR_HOLD[2]);
       }
     }
+
+    // add (i % 2 != 0) and differentiate between hold_in and hold_out
 
     strip.show();
   }
