@@ -3,10 +3,10 @@
 #include <xiaobattery.h>
 
 // --- Pin & Hardware Config ---
-#define BUTTON_START 1
-#define BUTTON_MODE 0
-#define LED_PIN 10
-#define NUM_LEDS 8
+#define BUTTON_START 8
+#define BUTTON_MODE 5
+#define LED_PIN 9
+#define NUM_LEDS 9
 #define SLEEP_TIMEOUT 10000 // 10 seconds
 
 // --- User LED Color Settings ---
