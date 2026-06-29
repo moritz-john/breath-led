@@ -181,8 +181,8 @@ void loop() {
       }
     }
 
-    startTime += duration; // Advance by exactly one phase duration
-    return;                // Skip rendering here — let the next loop() tick draw the fresh phase
+    startTime += duration; // += duration, not = now: exact phase length prevents late-tick error from accumulating
+    return;                // Skip rendering here - let the next loop() tick draw the fresh phase
   }
 
   // 2) Rendering Phase: Capped to FRAME_INTERVAL
@@ -197,11 +197,12 @@ void loop() {
     if (currentPhase == 0) { // INHALE - wave fills left to right
       float ledProgress = progress * NUM_LEDS;
       // loop through each LED and compute intensity based on distance from ledProgress
-      for (int i = 0; i < NUM_LEDS; i++) { 
+      for (int i = 0; i < NUM_LEDS; i++) {
         // Clamps negatives (LED not reached yet) to 0 (off); caps >1 to 1 so multiplying by 255 stays in uint8_t bounds; 0–1 is between min and max brightness
         float intensity = constrain(ledProgress - i, 0.0f, 1.0f);
         strip.setPixelColor(i, COLOR_INHALE[0] * intensity, COLOR_INHALE[1] * intensity, COLOR_INHALE[2] * intensity);
       }
+
     } else if (currentPhase == 2) { // EXHALE - wave drains right to left
       float ledProgress = (1.0f - progress) * NUM_LEDS;
       for (int i = 0; i < NUM_LEDS; i++) {
@@ -209,6 +210,7 @@ void loop() {
         float intensity = constrain(ledProgress - i, 0.0f, 1.0f);
         strip.setPixelColor(i, COLOR_EXHALE[0] * intensity, COLOR_EXHALE[1] * intensity, COLOR_EXHALE[2] * intensity);
       }
+
     } else { // HOLD_IN & HOLD_OUT
       for (int i = 0; i < NUM_LEDS; i++) {
         if (i % 2 == 0)
