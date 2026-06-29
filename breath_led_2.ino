@@ -26,7 +26,7 @@ const int BATTERY_MAX = 420; // 4.20V - full
 // --- Exercise Setup ---
 struct Exercise {
   const char *name; // Exercise name
-  int phases[4];    // {Inhale, Hold_In, Exhale, Hold_Out} in seconds
+  int phases[4];    // {Inhale, Hold_In, Exhale, Hold_Out} time in seconds
   int repeats;      // Number of breath cycles
   int ledIndex;     // Indicator LED when selecting this exercise
 };
@@ -50,13 +50,13 @@ Xiao battery;
 OneButton buttonStart; // Configured in setup()
 OneButton buttonMode;  // Configured in setup()
 
+bool running = false;
 int currentExercise = 0;
 int currentPhase = 0;
 int currentRepeat = 0;
-bool running = false;
 unsigned long startTime = 0;
 unsigned long lastActivityTime = 0;
-unsigned long lastFrameTime = 0; // Frame limiter - tracks last LED update time
+unsigned long lastFrameTime = 0;
 
 // --- Helpers ---
 void showIndicator() {
@@ -100,31 +100,29 @@ void onStartClick() {
   // Reset state variables regardless of start/stop for clean next exercise
   currentPhase = 0;
   currentRepeat = 0;
-  startTime = millis();
-  lastActivityTime = millis();
-  lastFrameTime = millis(); // Initialize frame timer on exercise start
-  if (!running)
-    showIndicator();
+  unsigned long now = millis();
+  startTime = now;
+  lastActivityTime = now;
+  lastFrameTime = now;
+
+  if (!running) showIndicator();
 }
 
 void onModeClick() {
-  if (running)
-    return;
+  if (running) return;
   currentExercise = (currentExercise + 1) % NUM_EXERCISE;
   showIndicator();
   lastActivityTime = millis();
 }
 
 void onModeLongPressStart() {
-  if (running)
-    return;
+  if (running) return;
   showBatteryLevel();
   lastActivityTime = millis();
 }
 
 void onModeLongPressStop() {
-  if (running)
-    return;
+  if (running) return;
   showIndicator();
   lastActivityTime = millis();
 }
