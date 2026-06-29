@@ -32,10 +32,10 @@ struct Exercise {
 };
 
 // { "name", {Inhale, Hold_In, Exhale, Hold_Out}, repeats, LedIndex }
-Exercise exercises[] = {
+const Exercise exercises[] = {
     {"4-7-8", {4, 7, 8, 0}, 8, 0},
-    {"Box", {4, 4, 4, 4}, 20, 3},
-    {"5:5", {5, 0, 5, 0}, 20, 7},
+    {"Box", {4, 4, 4, 4}, 20, 4},
+    {"1:5", {4, 0, 8, 0}, 25, 8},
 };
 
 const int NUM_EXERCISE = sizeof(exercises) / sizeof(exercises[0]);
