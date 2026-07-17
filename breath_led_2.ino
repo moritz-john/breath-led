@@ -203,6 +203,12 @@ void loop() {
         strip.setPixelColor(i, COLOR_INHALE[0] * intensity, COLOR_INHALE[1] * intensity, COLOR_INHALE[2] * intensity);
       }
 
+    } else if (currentPhase == 1) { // HOLD_IN - even-indexed LEDs lit
+      for (int i = 0; i < NUM_LEDS; i++) {
+        if (i % 2 == 0)
+          strip.setPixelColor(i, COLOR_HOLD[0], COLOR_HOLD[1], COLOR_HOLD[2]);
+      }
+
     } else if (currentPhase == 2) { // EXHALE - wave drains right to left
       float ledProgress = (1.0f - progress) * NUM_LEDS;
       for (int i = 0; i < NUM_LEDS; i++) {
@@ -211,14 +217,12 @@ void loop() {
         strip.setPixelColor(i, COLOR_EXHALE[0] * intensity, COLOR_EXHALE[1] * intensity, COLOR_EXHALE[2] * intensity);
       }
 
-    } else { // HOLD_IN & HOLD_OUT
+    } else { // HOLD_OUT (currentPhase == 3) - odd-indexed LEDs lit
       for (int i = 0; i < NUM_LEDS; i++) {
-        if (i % 2 == 0)
+        if (i % 2 != 0)
           strip.setPixelColor(i, COLOR_HOLD[0], COLOR_HOLD[1], COLOR_HOLD[2]);
       }
     }
-
-    // add (i % 2 != 0) and differentiate between hold_in and hold_out
 
     strip.show();
   }
