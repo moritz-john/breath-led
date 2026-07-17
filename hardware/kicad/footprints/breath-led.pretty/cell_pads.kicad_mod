@@ -7,7 +7,7 @@
 		(at 0 0.5 0)
 		(layer "F.SilkS")
 		(hide yes)
-		(uuid "49490ac0-843e-4bdc-b4e3-a0641250e23e")
+		(uuid "21566e16-03a5-4c29-8c27-7635c4f5554b")
 		(effects
 			(font
 				(size 1 1)
@@ -18,7 +18,7 @@
 	(property "Value" "cell_pads"
 		(at 0 -0.5 0)
 		(layer "F.Fab")
-		(uuid "231e28a6-f65f-4044-9642-d74cb3b6ce5e")
+		(uuid "e1aca525-f9c1-4eed-b413-279ce839d6cc")
 		(effects
 			(font
 				(size 1 1)
@@ -30,7 +30,7 @@
 		(at 0 0 0)
 		(layer "F.Fab")
 		(hide yes)
-		(uuid "2093c703-2567-43bb-842a-c9041938776c")
+		(uuid "53c37af8-0038-4c92-81aa-e63deab2389b")
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -41,7 +41,7 @@
 		(at 0 0 0)
 		(layer "F.Fab")
 		(hide yes)
-		(uuid "fb726f00-50b1-4682-8e36-c571b51d147f")
+		(uuid "9baf63e6-c63e-47df-851a-05ce6ddd53b6")
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -50,35 +50,24 @@
 	)
 	(attr through_hole)
 	(duplicate_pad_numbers_are_jumpers no)
-	(fp_text user "(+)"
-		(at -1.5 2.6 0)
+	(fp_text user "+"
+		(at -1.5 -2.8 0)
 		(layer "F.SilkS")
-		(uuid "aa6f56e9-a86d-4733-9089-9d1f910b6a5b")
+		(uuid "db65bf66-17ea-4a0b-8118-bd4aa2ebd191")
 		(effects
 			(font
-				(size 1 1)
+				(size 1.2 1.2)
 				(thickness 0.15)
 			)
 		)
 	)
-	(fp_text user "BATT"
-		(at 0 -2.5 0)
+	(fp_text user "-"
+		(at 1.5 -2.8 0)
 		(layer "F.SilkS")
-		(uuid "e5dec0c0-f8bd-4f3b-8007-b5160dec14d0")
+		(uuid "c18a2be1-195d-4629-a0d2-dc8f6eeb2fc1")
 		(effects
 			(font
-				(size 1 1.25)
-				(thickness 0.15)
-			)
-		)
-	)
-	(fp_text user "(-)"
-		(at 1.5 2.6 0)
-		(layer "F.SilkS")
-		(uuid "caeaeefd-6b32-405a-bf52-df726bd13f87")
-		(effects
-			(font
-				(size 1 1)
+				(size 1.2 1.2)
 				(thickness 0.15)
 			)
 		)
@@ -87,13 +76,13 @@
 		(at -1.5 0)
 		(size 1.5 3)
 		(layers "F.Cu" "F.Mask" "F.Paste")
-		(uuid "933e88b5-eb20-4906-9c04-b73da4d78753")
+		(uuid "60f7913b-a2cc-4b64-94be-35acde87a15f")
 	)
 	(pad "2" smd rect
 		(at 1.5 0)
 		(size 1.5 3)
 		(layers "F.Cu" "F.Mask" "F.Paste")
-		(uuid "cf8d5d1d-9fbf-4588-a983-fb753c849858")
+		(uuid "a01858e1-20bd-4517-a620-e336cc53e879")
 	)
 	(embedded_fonts no)
 )

@@ -1,6 +1,34 @@
-05-30 12:53:38 com_github_MitjaNemec_PlaceFootprints.action_place_footprints 674:Plugin executed on: 'darwin'
-05-30 12:53:38 com_github_MitjaNemec_PlaceFootprints.action_place_footprints 675:Plugin executed with python version: '3.9.13 (v3.9.13:6de2ca5339, May 17 2022, 11:37:23) \n[Clang 13.0.0 (clang-1300.0.29.30)]'
-05-30 12:53:38 com_github_MitjaNemec_PlaceFootprints.action_place_footprints 676:KiCad build version: 10.0.3
-05-30 12:53:38 com_github_MitjaNemec_PlaceFootprints.action_place_footprints 677:Plugin version: 5.0.0
+07-15 20:06:16 com_github_MitjaNemec_PlaceFootprints.action_place_footprints 674:Plugin executed on: 'darwin'
+07-15 20:06:16 com_github_MitjaNemec_PlaceFootprints.action_place_footprints 675:Plugin executed with python version: '3.9.13 (v3.9.13:6de2ca5339, May 17 2022, 11:37:23) \n[Clang 13.0.0 (clang-1300.0.29.30)]'
+07-15 20:06:16 com_github_MitjaNemec_PlaceFootprints.action_place_footprints 676:KiCad build version: 10.0.4
+07-15 20:06:16 com_github_MitjaNemec_PlaceFootprints.action_place_footprints 677:Plugin version: 5.0.0
 
-05-30 12:53:38 com_github_MitjaNemec_PlaceFootprints.action_place_footprints 678:Frame repr: <wx._core.Frame object at 0x12bc22280>
+07-15 20:06:16 com_github_MitjaNemec_PlaceFootprints.action_place_footprints 678:Frame repr: <wx._core.Frame object at 0x129c5d280>
+07-15 20:06:16 com_github_MitjaNemec_PlaceFootprints.place_footprints 121:getting a list of all footprints on board
+07-15 20:06:16 com_github_MitjaNemec_PlaceFootprints.place_footprints 156:Footprint Ref** on root level
+07-15 20:06:16 com_github_MitjaNemec_PlaceFootprints.place_footprints 156:Footprint D9 on root level
+07-15 20:06:16 com_github_MitjaNemec_PlaceFootprints.place_footprints 156:Footprint D1 on root level
+07-15 20:06:16 com_github_MitjaNemec_PlaceFootprints.place_footprints 156:Footprint R1 on root level
+07-15 20:06:16 com_github_MitjaNemec_PlaceFootprints.place_footprints 156:Footprint SW2 on root level
+07-15 20:06:16 com_github_MitjaNemec_PlaceFootprints.place_footprints 156:Footprint SW3 on root level
+07-15 20:06:16 com_github_MitjaNemec_PlaceFootprints.place_footprints 156:Footprint D4 on root level
+07-15 20:06:16 com_github_MitjaNemec_PlaceFootprints.place_footprints 156:Footprint H4 on root level
+07-15 20:06:16 com_github_MitjaNemec_PlaceFootprints.place_footprints 156:Footprint D7 on root level
+07-15 20:06:16 com_github_MitjaNemec_PlaceFootprints.place_footprints 156:Footprint H3 on root level
+07-15 20:06:16 com_github_MitjaNemec_PlaceFootprints.place_footprints 156:Footprint D3 on root level
+07-15 20:06:16 com_github_MitjaNemec_PlaceFootprints.place_footprints 156:Footprint SW1 on root level
+07-15 20:06:16 com_github_MitjaNemec_PlaceFootprints.place_footprints 156:Footprint D2 on root level
+07-15 20:06:16 com_github_MitjaNemec_PlaceFootprints.place_footprints 156:Footprint D8 on root level
+07-15 20:06:16 com_github_MitjaNemec_PlaceFootprints.place_footprints 156:Footprint H1 on root level
+07-15 20:06:16 com_github_MitjaNemec_PlaceFootprints.place_footprints 156:Footprint D5 on root level
+07-15 20:06:16 com_github_MitjaNemec_PlaceFootprints.place_footprints 156:Footprint H2 on root level
+07-15 20:06:16 com_github_MitjaNemec_PlaceFootprints.place_footprints 156:Footprint D6 on root level
+07-15 20:06:16 com_github_MitjaNemec_PlaceFootprints.place_footprints 156:Footprint U1 on root level
+07-15 20:06:16 com_github_MitjaNemec_PlaceFootprints.place_footprints 156:Footprint J1 on root level
+07-15 20:06:16 com_github_MitjaNemec_PlaceFootprints.place_footprints 156:Footprint Ref** on root level
+07-15 20:06:16 com_github_MitjaNemec_PlaceFootprints.action_place_footprints 717:Reference footprint='D5'
+07-15 20:06:17 com_github_MitjaNemec_PlaceFootprints.action_place_footprints 858:Reference designator is: D
+07-15 20:06:17 com_github_MitjaNemec_PlaceFootprints.action_place_footprints 859:Reference number is: 5
+07-15 20:06:17 com_github_MitjaNemec_PlaceFootprints.action_place_footprints 891:Sorted and filtered list:
+['D1', 'D2', 'D3', 'D4', 'D5', 'D6', 'D7', 'D8', 'D9']
+07-15 20:06:17 com_github_MitjaNemec_PlaceFootprints.action_place_footprints 376:wx.Colour(38, 38, 38, 255)

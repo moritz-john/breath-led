@@ -253,7 +253,7 @@
       "internal_id": "",
       "mfg": "",
       "mpn": "",
-      "sch_revision": "A"
+      "sch_revision": "B"
     },
     "layer_pairs": [],
     "layer_presets": [],
@@ -498,7 +498,9 @@
   },
   "libraries": {
     "pinned_footprint_libs": [],
-    "pinned_symbol_libs": []
+    "pinned_symbol_libs": [
+      "breath-led"
+    ]
   },
   "meta": {
     "filename": "breath-led.kicad_pro",
