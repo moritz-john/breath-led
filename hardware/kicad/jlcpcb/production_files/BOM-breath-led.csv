@@ -1,0 +1,7 @@
+Comment,Designator,Footprint,LCSC,Quantity
+470,R1,R_1206_3216Metric_Pad1.30x1.75mm_HandSolder,C114948,1
+SW_DPDT_x2,SW1,SSSS820101,C97434,1
+SW_Push,"SW2,SW3",SW_SPST_SKQG_WithStem,C202424,2
+WS2812B-V5,"D1,D2,D3,D4,D5,D6,D7,D8,D9",LED_WS2812B_PLCC4_5.0x5.0mm_P3.2mm,C2874885,9
+xiao-ble,U1,xiao-ble-smd-cutout-totem-edited,,1
+Battery Pad,J1,cell_pads,,1

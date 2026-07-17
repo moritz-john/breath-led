@@ -1,0 +1,4 @@
+(fp_lib_table
+	(version 7)
+	(lib (name "breath-led") (type "KiCad") (uri "${KIPRJMOD}/footprints/breath-led.pretty") (options "") (descr ""))
+)

@@ -1,0 +1,99 @@
+(footprint "cell_pads"
+	(version 20260206)
+	(generator "pcbnew")
+	(generator_version "10.0")
+	(layer "F.Cu")
+	(property "Reference" "REF**"
+		(at 0 0.5 0)
+		(layer "F.SilkS")
+		(hide yes)
+		(uuid "49490ac0-843e-4bdc-b4e3-a0641250e23e")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Value" "cell_pads"
+		(at 0 -0.5 0)
+		(layer "F.Fab")
+		(uuid "231e28a6-f65f-4044-9642-d74cb3b6ce5e")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Datasheet" ""
+		(at 0 0 0)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "2093c703-2567-43bb-842a-c9041938776c")
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+		)
+	)
+	(property "Description" ""
+		(at 0 0 0)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "fb726f00-50b1-4682-8e36-c571b51d147f")
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+		)
+	)
+	(attr through_hole)
+	(duplicate_pad_numbers_are_jumpers no)
+	(fp_text user "(+)"
+		(at -1.5 2.6 0)
+		(layer "F.SilkS")
+		(uuid "aa6f56e9-a86d-4733-9089-9d1f910b6a5b")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(fp_text user "BATT"
+		(at 0 -2.5 0)
+		(layer "F.SilkS")
+		(uuid "e5dec0c0-f8bd-4f3b-8007-b5160dec14d0")
+		(effects
+			(font
+				(size 1 1.25)
+				(thickness 0.15)
+			)
+		)
+	)
+	(fp_text user "(-)"
+		(at 1.5 2.6 0)
+		(layer "F.SilkS")
+		(uuid "caeaeefd-6b32-405a-bf52-df726bd13f87")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(pad "1" smd rect
+		(at -1.5 0)
+		(size 1.5 3)
+		(layers "F.Cu" "F.Mask" "F.Paste")
+		(uuid "933e88b5-eb20-4906-9c04-b73da4d78753")
+	)
+	(pad "2" smd rect
+		(at 1.5 0)
+		(size 1.5 3)
+		(layers "F.Cu" "F.Mask" "F.Paste")
+		(uuid "cf8d5d1d-9fbf-4588-a983-fb753c849858")
+	)
+	(embedded_fonts no)
+)
