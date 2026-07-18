@@ -233,14 +233,35 @@ void loop() {
 // ├─ [1] LOGIC PHASE (uncapped - runs every tick for timing precision)
 // │   ├─ Compute phase duration
 // │   └─ Phase elapsed?
-// │       ├─ Advance phase (skip zero-duration phases)
+// │       ├─ Advance phase (skip zero-duration phases, wrap 3 → 0)
 // │       ├─ Full cycle done? → increment repeat, check if finished
 // │       └─ startTime += duration → return (skip render this tick)
 // │
-// └─ [2] RENDERING PHASE (capped to FRAME_INTERVAL - saves power)
+// └─ [2] RENDERING PHASE (capped to FRAME_INTERVAL)
 //     └─ Frame interval elapsed?
 //         ├─ Compute progress (0.0→1.0)
-//         ├─ Inhale:  fill LEDs 0→N with COLOR_INHALE
-//         ├─ Exhale:  fill LEDs N→0 with COLOR_EXHALE
-//         ├─ Hold:    odd LEDs lit with COLOR_HOLD
-//         └─ strip.show()
+//         └─ for each LED i (0..NUM_LEDS, sequential, one LED at a time):
+//             │   calculate intensity = clamp(ledProgress - i, 0, 1)
+//             │   where ledProgress = progress * NUM_LEDS (how far the wave has travelled)
+//             │   → intensity < 0:  i (this LED's position) is ahead of the wave → clamped to 0 (off)
+//             │   → intensity 0–1:  i (this LED's position) is right at the wave → partial brightness
+//             │   → intensity > 1:  i (this LED's position) is behind the wave   → clamped to 1 (full brightness)
+//             ├─ Inhale/Exhale: wave moves 0→N / N→0, setPixelColor using calculated intensity
+//             ├─ Hold In/Out   : alternate even (i%2==0) / odd (i%2!=0) LEDs at full COLOR_HOLD
+//             └─ strip.show() after the for-loop above → pushes all 9 LEDs' new colors to the strip at once
+
+// Example: 4s Inhale across 9 LEDs (duration = 4000ms, NUM_LEDS = 9):
+// 0% Done (now = 0ms) → progress = 0.0 → ledProgress = 0.0
+//   LED 0    : clamp(0.0 - 0, 0, 1) = 0.0 (Off)
+//   LED 1    : clamp(0.0 - 1, 0, 1) = 0.0 (Off)
+//   LED 2..8 : clamp(0.0 - i, 0, 1) = 0.0 (Off)
+// 25% Done (now = 1000ms) → progress = 0.25 → ledProgress = 2.25
+//   LED 0 & 1: clamp(2.25 - i, 0, 1) = 1.0 (Fully Lit)
+//   LED 2    : clamp(2.25 - 2, 0, 1) = 0.25 (Quarter Bright)
+//   LED 3..8 : clamp(2.25 - i, 0, 1) = 0.0 (Off)
+// 50% Done (now = 2000ms) → progress = 0.50 → ledProgress = 4.5
+//   LED 0..3 : clamp(4.5 - i, 0, 1) = 1.0 (Fully Lit)
+//   LED 4    : clamp(4.5 - 4, 0, 1) = 0.5 (Half Bright)
+//   LED 5..8 : clamp(4.5 - i, 0, 1) = 0.0 (Off)
+// 100% Done (now = 4000ms) → progress = 1.00 → ledProgress = 9.0
+//   All LEDs (0..8) yield intensity >= 1.0 → clamped to 1.0 (All Lit)
