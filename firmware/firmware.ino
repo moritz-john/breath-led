@@ -89,9 +89,6 @@ void goToSleep() {
   strip.clear();
   strip.show();
   delay(50);
-  pinMode(BUTTON_START, INPUT_PULLUP_SENSE);
-  pinMode(BUTTON_MODE, INPUT_PULLUP_SENSE);
-  sd_power_system_off();
 }
 
 // --- Button Callbacks ---
