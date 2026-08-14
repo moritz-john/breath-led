@@ -3,6 +3,10 @@ Comment,Designator,Footprint,LCSC,Quantity
 JS202011JCQN,SW1,SW_DPDT_JS202011JCQN,C221665,1
 SKQGAFE010,"SW2,SW3",SW_SPST_SKQG_WithStem,C202424,2
 WS2812B,"D1,D2,D3,D4,D5,D6,D7,D8,D9",LED_WS2812B_PLCC4_5.0x5.0mm_P3.2mm,C2874885,9
-Val**,Ref**,breath-led-logo,,1
 xiao-RP2350-simplified,U1,xiao-smd-simplified-battery-pad-cutout,,1
 Battery Pad,J1,cell_pads,,1
+LED_VDD,TP1,TestPoint_Pad_D1.5mm,,1
+GND,TP3,TestPoint_Pad_D1.5mm,,1
+LED_DIN,TP2,TestPoint_Pad_D1.5mm,,1
+breath-led-f,Logo1,breath-led-logo,,1
+breath-led-b,Logo2,breath-led-logo,,1

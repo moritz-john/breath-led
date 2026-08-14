@@ -39,9 +39,9 @@
         "other_text_thickness": 0.15,
         "other_text_upright": false,
         "pads": {
-          "drill": 1.016,
-          "height": 1.397,
-          "width": 1.397
+          "drill": 1.0,
+          "height": 1.4,
+          "width": 1.4
         },
         "silk_line_width": 0.1,
         "silk_text_italic": false,
@@ -253,7 +253,7 @@
       "internal_id": "",
       "mfg": "",
       "mpn": "",
-      "sch_revision": "B"
+      "sch_revision": ""
     },
     "layer_pairs": [],
     "layer_presets": [],
@@ -578,6 +578,7 @@
       "netlist": "",
       "plot": "",
       "specctra_dsn": "",
+      "step": "26_08_01_breath-led-pcb.step",
       "vrml": ""
     },
     "page_layout_descr_file": ""
@@ -700,7 +701,7 @@
         "uuid": "0d83cf82-f312-4c64-bd67-d0264a07179b"
       }
     ],
-    "used_designators": "U2",
+    "used_designators": "Logo1-2,TP1-4,U2,VDD1,DIN1,GND1",
     "variants": []
   },
   "sheets": [

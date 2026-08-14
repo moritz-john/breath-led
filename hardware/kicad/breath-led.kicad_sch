@@ -6,8 +6,7 @@
 	(paper "A5")
 	(title_block
 		(title "breath-led")
-		(date "2026-07-16")
-		(rev "B")
+		(date "2026-08-01")
 		(company "Moritz John")
 	)
 	(lib_symbols
@@ -225,6 +224,129 @@
 						)
 					)
 					(number "2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+			(embedded_fonts no)
+		)
+		(symbol "Connector:TestPoint_Small"
+			(pin_numbers
+				(hide yes)
+			)
+			(pin_names
+				(offset 0.762)
+				(hide yes)
+			)
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(in_pos_files yes)
+			(duplicate_pin_numbers_are_jumpers no)
+			(property "Reference" "TP"
+				(at 0 3.81 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Value" "TestPoint_Small"
+				(at 0 2.032 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Footprint" ""
+				(at 5.08 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Datasheet" ""
+				(at 5.08 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Description" "test point"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "ki_keywords" "test point tp"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "ki_fp_filters" "Pin* Test*"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(symbol "TestPoint_Small_0_1"
+				(circle
+					(center 0 0)
+					(radius 0.508)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+			)
+			(symbol "TestPoint_Small_1_1"
+				(pin passive line
+					(at 0 0 90)
+					(length 0)
+					(name "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "1"
 						(effects
 							(font
 								(size 1.27 1.27)
@@ -1214,6 +1336,101 @@
 			)
 			(embedded_fonts no)
 		)
+		(symbol "breath-led:Logo"
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(in_pos_files yes)
+			(duplicate_pin_numbers_are_jumpers no)
+			(property "Reference" "Logo"
+				(at 0 5.08 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Value" "Logo Name"
+				(at 0 3.175 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Footprint" ""
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Datasheet" ""
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Description" ""
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "ki_fp_filters" "*logo*"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(symbol "Logo_1_1"
+				(rectangle
+					(start -2.54 1.27)
+					(end 2.54 -3.81)
+					(stroke
+						(width 0)
+						(type solid)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(text "Logo"
+					(at 0 -1.27 0)
+					(effects
+						(font
+							(size 1.27 1.27)
+							(thickness 0.254)
+							(bold yes)
+						)
+					)
+				)
+			)
+			(embedded_fonts no)
+		)
 		(symbol "breath-led:xiao-RP2350-simplified"
 			(pin_names
 				(offset 1.016)
@@ -1701,7 +1918,7 @@
 	)
 	(text "Use WS2812B-V5 (or V6) variant\nThey features built-in decoupling capacitor per LED, eliminating the need for external ones"
 		(exclude_from_sim no)
-		(at 14.478 66.294 0)
+		(at 12.192 66.294 0)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -1789,6 +2006,18 @@
 		(uuid "77c587eb-5689-4717-ad7f-624a6a72b7d7")
 	)
 	(junction
+		(at 35.56 81.28)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "7df53b77-0590-40de-a228-616b201a0922")
+	)
+	(junction
+		(at 35.56 71.12)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "8a777a32-481a-4090-b299-8149f1f989ca")
+	)
+	(junction
 		(at 63.5 91.44)
 		(diameter 0)
 		(color 0 0 0 0)
@@ -1811,6 +2040,12 @@
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "9ea22b77-94c4-44de-b92c-f5f1ca9a5204")
+	)
+	(junction
+		(at 35.56 91.44)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "a0326370-5c3a-4dae-b711-51c375bb98a4")
 	)
 	(junction
 		(at 81.28 71.12)
@@ -2028,6 +2263,16 @@
 	)
 	(wire
 		(pts
+			(xy 33.02 81.28) (xy 35.56 81.28)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "2e1912b5-bf74-4c12-b286-ed795b658b2e")
+	)
+	(wire
+		(pts
 			(xy 175.26 24.13) (xy 172.72 24.13)
 		)
 		(stroke
@@ -2065,6 +2310,16 @@
 			(type default)
 		)
 		(uuid "32eab090-ebc0-4cbe-9349-1ce7d1bc3734")
+	)
+	(wire
+		(pts
+			(xy 35.56 91.44) (xy 45.72 91.44)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "33d5fa9e-d7e8-4f48-bdc8-6e7f384aaf13")
 	)
 	(wire
 		(pts
@@ -2145,6 +2400,16 @@
 			(type default)
 		)
 		(uuid "49d7a4f8-69c4-4c44-8bd1-c875387104dc")
+	)
+	(wire
+		(pts
+			(xy 35.56 81.28) (xy 38.1 81.28)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "49df95d0-0bc4-4830-85ea-3b4b02bf207f")
 	)
 	(wire
 		(pts
@@ -2318,7 +2583,7 @@
 	)
 	(wire
 		(pts
-			(xy 25.4 81.28) (xy 27.94 81.28)
+			(xy 22.86 81.28) (xy 25.4 81.28)
 		)
 		(stroke
 			(width 0)
@@ -2408,17 +2673,7 @@
 	)
 	(wire
 		(pts
-			(xy 35.56 81.28) (xy 38.1 81.28)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "afd50ee2-76fc-4c2d-b6a7-d5783cbf502f")
-	)
-	(wire
-		(pts
-			(xy 25.4 91.44) (xy 45.72 91.44)
+			(xy 22.86 91.44) (xy 35.56 91.44)
 		)
 		(stroke
 			(width 0)
@@ -2455,6 +2710,16 @@
 			(type default)
 		)
 		(uuid "c4e2dedc-40e9-447a-b9ce-438d52141de3")
+	)
+	(wire
+		(pts
+			(xy 35.56 71.12) (xy 45.72 71.12)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "d1946e2d-b281-4dd2-8bec-ffda7f706782")
 	)
 	(wire
 		(pts
@@ -2498,7 +2763,7 @@
 	)
 	(wire
 		(pts
-			(xy 25.4 71.12) (xy 45.72 71.12)
+			(xy 22.86 71.12) (xy 35.56 71.12)
 		)
 		(stroke
 			(width 0)
@@ -2568,7 +2833,7 @@
 	)
 	(wire
 		(pts
-			(xy 25.4 93.98) (xy 25.4 91.44)
+			(xy 22.86 93.98) (xy 22.86 91.44)
 		)
 		(stroke
 			(width 0)
@@ -2738,7 +3003,7 @@
 	)
 	(global_label "LED_DIN"
 		(shape input)
-		(at 25.4 81.28 180)
+		(at 22.86 81.28 180)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -2748,7 +3013,7 @@
 		)
 		(uuid "9a01ef85-709c-4a13-b0d0-5e1a4797aba7")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 14.7948 81.28 0)
+			(at 12.2548 81.28 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -2762,7 +3027,7 @@
 	)
 	(global_label "LED_VDD"
 		(shape input)
-		(at 25.4 71.12 180)
+		(at 22.86 71.12 180)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -2772,7 +3037,7 @@
 		)
 		(uuid "c118854f-3890-4f90-92b3-4f6c4b0905bf")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 14.3715 71.12 0)
+			(at 11.8315 71.12 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -2933,7 +3198,7 @@
 				)
 			)
 		)
-		(property "Distributor Link 1" "https://www.laskakit.cz/en/worldsemi-ws2812e--neopixel-rgb-led/"
+		(property "Distributor Link 1" "https://www.lcsc.com/product-detail/C2874885.html"
 			(at 99.06 81.28 0)
 			(hide yes)
 			(show_name no)
@@ -3042,7 +3307,7 @@
 				)
 			)
 		)
-		(property "Distributor Link 1" "https://www.laskakit.cz/en/worldsemi-ws2812e--neopixel-rgb-led/"
+		(property "Distributor Link 1" "https://www.lcsc.com/product-detail/C2874885.html"
 			(at 187.96 81.28 0)
 			(hide yes)
 			(show_name no)
@@ -3151,7 +3416,7 @@
 				)
 			)
 		)
-		(property "Distributor Link 1" "https://www.laskakit.cz/en/worldsemi-ws2812e--neopixel-rgb-led/"
+		(property "Distributor Link 1" "https://www.lcsc.com/product-detail/C2874885.html"
 			(at 45.72 81.28 0)
 			(hide yes)
 			(show_name no)
@@ -3178,6 +3443,82 @@
 			(project "breath-led"
 				(path "/0d83cf82-f312-4c64-bd67-d0264a07179b"
 					(reference "D1")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Connector:TestPoint_Small")
+		(at 35.56 91.44 180)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "144e89ab-a03c-4832-b9ca-96758af727cf")
+		(property "Reference" "TP3"
+			(at 35.56 93.218 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "GND"
+			(at 35.56 94.996 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "breath-led:TestPoint_Pad_D1.5mm"
+			(at 30.48 91.44 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 30.48 91.44 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "test point"
+			(at 35.56 91.44 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "4b3340de-36fc-45e7-822e-cf8d5dcafef3")
+		)
+		(instances
+			(project "breath-led"
+				(path "/0d83cf82-f312-4c64-bd67-d0264a07179b"
+					(reference "TP3")
 					(unit 1)
 				)
 			)
@@ -3544,6 +3885,82 @@
 		)
 	)
 	(symbol
+		(lib_id "breath-led:Logo")
+		(at 69.85 115.57 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "48d0af34-86ee-4c52-8437-bfcc380395f9")
+		(property "Reference" "Logo2"
+			(at 73.66 115.5699 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "breath-led-b"
+			(at 73.66 118.1099 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "breath-led:breath-led-logo"
+			(at 69.85 115.57 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 69.85 115.57 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" ""
+			(at 69.85 115.57 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(instances
+			(project "breath-led"
+				(path "/0d83cf82-f312-4c64-bd67-d0264a07179b"
+					(reference "Logo2")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
 		(lib_id "LED:WS2812B")
 		(at 63.5 81.28 0)
 		(unit 1)
@@ -3620,7 +4037,7 @@
 				)
 			)
 		)
-		(property "Distributor Link 1" "https://www.laskakit.cz/en/worldsemi-ws2812e--neopixel-rgb-led/"
+		(property "Distributor Link 1" "https://www.lcsc.com/product-detail/C2874885.html"
 			(at 63.5 81.28 0)
 			(hide yes)
 			(show_name no)
@@ -3930,7 +4347,7 @@
 				)
 			)
 		)
-		(property "Distributor Link 1" "https://www.laskakit.cz/en/worldsemi-ws2812e--neopixel-rgb-led/"
+		(property "Distributor Link 1" "https://www.lcsc.com/product-detail/C2874885.html"
 			(at 152.4 81.28 0)
 			(hide yes)
 			(show_name no)
@@ -4267,7 +4684,7 @@
 	)
 	(symbol
 		(lib_id "Mechanical:MountingHole")
-		(at 69.85 115.57 0)
+		(at 53.34 115.57 0)
 		(unit 1)
 		(body_style 1)
 		(exclude_from_sim no)
@@ -4278,7 +4695,7 @@
 		(fields_autoplaced yes)
 		(uuid "85384ed4-a9b1-4a04-88b0-e7ebda5ff40f")
 		(property "Reference" "H2"
-			(at 72.39 114.2999 0)
+			(at 55.88 114.2999 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -4289,7 +4706,7 @@
 			)
 		)
 		(property "Value" "M2"
-			(at 72.39 116.8399 0)
+			(at 55.88 116.8399 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -4300,7 +4717,7 @@
 			)
 		)
 		(property "Footprint" "MountingHole:MountingHole_2.2mm_M2"
-			(at 69.85 115.57 0)
+			(at 53.34 115.57 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -4311,7 +4728,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 69.85 115.57 0)
+			(at 53.34 115.57 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -4322,7 +4739,7 @@
 			)
 		)
 		(property "Description" "Mounting Hole without connection"
-			(at 69.85 115.57 0)
+			(at 53.34 115.57 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -4343,7 +4760,7 @@
 	)
 	(symbol
 		(lib_id "power:GND")
-		(at 25.4 93.98 0)
+		(at 22.86 93.98 0)
 		(unit 1)
 		(body_style 1)
 		(exclude_from_sim no)
@@ -4353,7 +4770,7 @@
 		(dnp no)
 		(uuid "8c0dbe4e-3262-4ccd-adc5-0d0c0a3e58a1")
 		(property "Reference" "#PWR01"
-			(at 25.4 100.33 0)
+			(at 22.86 100.33 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -4364,7 +4781,7 @@
 			)
 		)
 		(property "Value" "GND"
-			(at 25.4 97.536 0)
+			(at 22.86 97.536 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -4374,7 +4791,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 25.4 93.98 0)
+			(at 22.86 93.98 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -4385,7 +4802,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 25.4 93.98 0)
+			(at 22.86 93.98 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -4396,7 +4813,7 @@
 			)
 		)
 		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
-			(at 25.4 93.98 0)
+			(at 22.86 93.98 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -4498,7 +4915,7 @@
 	)
 	(symbol
 		(lib_id "Mechanical:MountingHole")
-		(at 69.85 128.27 0)
+		(at 53.34 128.27 0)
 		(unit 1)
 		(body_style 1)
 		(exclude_from_sim no)
@@ -4509,7 +4926,7 @@
 		(fields_autoplaced yes)
 		(uuid "9009be98-4cbc-4444-9d38-5fd762468688")
 		(property "Reference" "H4"
-			(at 72.39 126.9999 0)
+			(at 55.88 126.9999 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -4520,7 +4937,7 @@
 			)
 		)
 		(property "Value" "M2"
-			(at 72.39 129.5399 0)
+			(at 55.88 129.5399 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -4531,7 +4948,7 @@
 			)
 		)
 		(property "Footprint" "MountingHole:MountingHole_2.2mm_M2"
-			(at 69.85 128.27 0)
+			(at 53.34 128.27 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -4542,7 +4959,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 69.85 128.27 0)
+			(at 53.34 128.27 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -4553,7 +4970,7 @@
 			)
 		)
 		(property "Description" "Mounting Hole without connection"
-			(at 69.85 128.27 0)
+			(at 53.34 128.27 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -4649,7 +5066,7 @@
 				)
 			)
 		)
-		(property "Distributor Link 1" "https://www.laskakit.cz/en/worldsemi-ws2812e--neopixel-rgb-led/"
+		(property "Distributor Link 1" "https://www.lcsc.com/product-detail/C2874885.html"
 			(at 81.28 81.28 0)
 			(hide yes)
 			(show_name no)
@@ -4683,7 +5100,7 @@
 	)
 	(symbol
 		(lib_id "Mechanical:MountingHole")
-		(at 69.85 109.22 0)
+		(at 53.34 109.22 0)
 		(unit 1)
 		(body_style 1)
 		(exclude_from_sim no)
@@ -4694,7 +5111,7 @@
 		(fields_autoplaced yes)
 		(uuid "a4bfe259-213a-492d-b580-278a025fd80d")
 		(property "Reference" "H1"
-			(at 72.39 107.9499 0)
+			(at 55.88 107.9499 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -4705,7 +5122,7 @@
 			)
 		)
 		(property "Value" "M2"
-			(at 72.39 110.4899 0)
+			(at 55.88 110.4899 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -4716,7 +5133,7 @@
 			)
 		)
 		(property "Footprint" "MountingHole:MountingHole_2.2mm_M2"
-			(at 69.85 109.22 0)
+			(at 53.34 109.22 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -4727,7 +5144,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 69.85 109.22 0)
+			(at 53.34 109.22 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -4738,7 +5155,7 @@
 			)
 		)
 		(property "Description" "Mounting Hole without connection"
-			(at 69.85 109.22 0)
+			(at 53.34 109.22 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -4752,6 +5169,82 @@
 			(project "breath-led"
 				(path "/0d83cf82-f312-4c64-bd67-d0264a07179b"
 					(reference "H1")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "breath-led:Logo")
+		(at 69.85 107.95 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "ae3c79a1-f16a-42db-b688-a48b5b986b18")
+		(property "Reference" "Logo1"
+			(at 73.66 107.9499 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "breath-led-f"
+			(at 73.66 110.4899 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "breath-led:breath-led-logo"
+			(at 69.85 107.95 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 69.85 107.95 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" ""
+			(at 69.85 107.95 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(instances
+			(project "breath-led"
+				(path "/0d83cf82-f312-4c64-bd67-d0264a07179b"
+					(reference "Logo1")
 					(unit 1)
 				)
 			)
@@ -4834,7 +5327,7 @@
 				)
 			)
 		)
-		(property "Distributor Link 1" "https://www.laskakit.cz/en/worldsemi-ws2812e--neopixel-rgb-led/"
+		(property "Distributor Link 1" "https://www.lcsc.com/product-detail/C2874885.html"
 			(at 170.18 81.28 0)
 			(hide yes)
 			(show_name no)
@@ -4868,7 +5361,7 @@
 	)
 	(symbol
 		(lib_id "Mechanical:MountingHole")
-		(at 69.85 121.92 0)
+		(at 53.34 121.92 0)
 		(unit 1)
 		(body_style 1)
 		(exclude_from_sim no)
@@ -4879,7 +5372,7 @@
 		(fields_autoplaced yes)
 		(uuid "ddf662b0-92e0-41d8-bc4e-e045c5786485")
 		(property "Reference" "H3"
-			(at 72.39 120.6499 0)
+			(at 55.88 120.6499 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -4890,7 +5383,7 @@
 			)
 		)
 		(property "Value" "M2"
-			(at 72.39 123.1899 0)
+			(at 55.88 123.1899 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -4901,7 +5394,7 @@
 			)
 		)
 		(property "Footprint" "MountingHole:MountingHole_2.2mm_M2"
-			(at 69.85 121.92 0)
+			(at 53.34 121.92 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -4912,7 +5405,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 69.85 121.92 0)
+			(at 53.34 121.92 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -4923,7 +5416,7 @@
 			)
 		)
 		(property "Description" "Mounting Hole without connection"
-			(at 69.85 121.92 0)
+			(at 53.34 121.92 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -4943,8 +5436,8 @@
 		)
 	)
 	(symbol
-		(lib_id "Device:R_US")
-		(at 31.75 81.28 90)
+		(lib_id "Connector:TestPoint_Small")
+		(at 35.56 71.12 180)
 		(unit 1)
 		(body_style 1)
 		(exclude_from_sim no)
@@ -4952,9 +5445,9 @@
 		(on_board yes)
 		(in_pos_files yes)
 		(dnp no)
-		(uuid "e6e99d99-c574-4e47-a6a9-3db6b3823b75")
-		(property "Reference" "R1"
-			(at 31.75 77.47 90)
+		(uuid "e1069c6d-bf95-4250-b67c-ce55f0472f67")
+		(property "Reference" "TP1"
+			(at 35.56 72.898 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -4963,8 +5456,8 @@
 				)
 			)
 		)
-		(property "Value" "470"
-			(at 31.75 79.248 90)
+		(property "Value" "LED_VDD"
+			(at 35.56 74.676 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -4973,8 +5466,8 @@
 				)
 			)
 		)
-		(property "Footprint" "Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder"
-			(at 32.004 80.264 90)
+		(property "Footprint" "breath-led:TestPoint_Pad_D1.5mm"
+			(at 30.48 71.12 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -4985,7 +5478,83 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 31.75 81.28 0)
+			(at 30.48 71.12 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "test point"
+			(at 35.56 71.12 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "97f4e0b4-d210-40f5-a760-bc648f687324")
+		)
+		(instances
+			(project "breath-led"
+				(path "/0d83cf82-f312-4c64-bd67-d0264a07179b"
+					(reference "TP1")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:R_US")
+		(at 29.21 81.28 90)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "e6e99d99-c574-4e47-a6a9-3db6b3823b75")
+		(property "Reference" "R1"
+			(at 29.21 77.47 90)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "470"
+			(at 29.21 79.248 90)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder"
+			(at 29.464 80.264 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 29.21 81.28 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -4996,7 +5565,7 @@
 			)
 		)
 		(property "Description" "Resistor, US symbol"
-			(at 31.75 81.28 0)
+			(at 29.21 81.28 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -5007,7 +5576,7 @@
 			)
 		)
 		(property "LCSC" "C114948"
-			(at 31.75 81.28 90)
+			(at 29.21 81.28 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -5018,7 +5587,7 @@
 			)
 		)
 		(property "Distributor Link 1" "https://www.digikey.de/en/products/detail/yageo/RC1206JR-07470RL/729301"
-			(at 31.75 81.28 90)
+			(at 29.21 81.28 90)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -5120,7 +5689,7 @@
 				)
 			)
 		)
-		(property "Distributor Link 1" "https://www.laskakit.cz/en/worldsemi-ws2812e--neopixel-rgb-led/"
+		(property "Distributor Link 1" "https://www.lcsc.com/product-detail/C2874885.html"
 			(at 116.84 81.28 0)
 			(hide yes)
 			(show_name no)
@@ -5147,6 +5716,82 @@
 			(project "breath-led"
 				(path "/0d83cf82-f312-4c64-bd67-d0264a07179b"
 					(reference "D5")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Connector:TestPoint_Small")
+		(at 35.56 81.28 180)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "f140d714-aa54-4a6b-8630-e4f240071418")
+		(property "Reference" "TP2"
+			(at 35.56 83.058 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "LED_DIN"
+			(at 35.56 84.836 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "breath-led:TestPoint_Pad_D1.5mm"
+			(at 30.48 81.28 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 30.48 81.28 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "test point"
+			(at 35.56 81.28 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "2850c9d7-3494-4c4f-90bc-d69c8e29205f")
+		)
+		(instances
+			(project "breath-led"
+				(path "/0d83cf82-f312-4c64-bd67-d0264a07179b"
+					(reference "TP2")
 					(unit 1)
 				)
 			)
@@ -5229,7 +5874,7 @@
 				)
 			)
 		)
-		(property "Distributor Link 1" "https://www.laskakit.cz/en/worldsemi-ws2812e--neopixel-rgb-led/"
+		(property "Distributor Link 1" "https://www.lcsc.com/product-detail/C2874885.html"
 			(at 134.62 81.28 0)
 			(hide yes)
 			(show_name no)
