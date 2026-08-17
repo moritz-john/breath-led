@@ -1,6 +1,6 @@
+#include "xiao_battery.h"
 #include <Adafruit_NeoPixel.h>
 #include <OneButton.h>
-#include <xiaobattery.h>
 
 // --- Pin & Hardware Config ---
 #define BUTTON_START D8
@@ -45,7 +45,7 @@ const int FRAME_INTERVAL = 50; // ~ 20 FPS (1000ms / 50)
 
 // --- Hardware & State ---
 Adafruit_NeoPixel strip(NUM_LEDS, LED_PIN, NEO_GRB + NEO_KHZ800);
-Xiao battery;
+XiaoBattery battery;
 
 OneButton buttonStart; // Configured in setup()
 OneButton buttonMode;  // Configured in setup()
@@ -133,6 +133,8 @@ void setup() {
   buttonMode.attachClick(onModeClick);
   buttonMode.attachLongPressStart(onModeLongPressStart);
   buttonMode.attachLongPressStop(onModeLongPressStop);
+
+  battery.begin();
 
   strip.begin();
   strip.setBrightness(MAX_BRIGHTNESS);
