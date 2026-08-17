@@ -197,7 +197,10 @@ void loop() {
       for (int i = 0; i < NUM_LEDS; i++) {
         // Clamps negatives (LED not reached yet) to 0 (off); caps >1 to 1 so multiplying by 255 stays in uint8_t bounds; 0–1 is between min and max brightness
         float intensity = constrain(ledProgress - i, 0.0f, 1.0f);
-        strip.setPixelColor(i, COLOR_INHALE[0] * intensity, COLOR_INHALE[1] * intensity, COLOR_INHALE[2] * intensity);
+        strip.setPixelColor(i,
+                            round(COLOR_INHALE[0] * intensity),
+                            round(COLOR_INHALE[1] * intensity),
+                            round(COLOR_INHALE[2] * intensity));
       }
 
     } else if (currentPhase == 1) { // HOLD_IN - even-indexed LEDs lit
@@ -211,7 +214,10 @@ void loop() {
       for (int i = 0; i < NUM_LEDS; i++) {
         // Mirrors inhale but reversed; same clamping logic applies
         float intensity = constrain(ledProgress - i, 0.0f, 1.0f);
-        strip.setPixelColor(i, COLOR_EXHALE[0] * intensity, COLOR_EXHALE[1] * intensity, COLOR_EXHALE[2] * intensity);
+        strip.setPixelColor(i,
+                            round(COLOR_EXHALE[0] * intensity),
+                            round(COLOR_EXHALE[1] * intensity),
+                            round(COLOR_EXHALE[2] * intensity));
       }
 
     } else { // HOLD_OUT (currentPhase == 3) - odd-indexed LEDs lit
