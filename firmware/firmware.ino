@@ -15,12 +15,12 @@ const int BATTERY_MAX = 420; // 4.20V - full
 
 // --- User LED Color Settings ---
 // clang-format off
-const uint8_t MAX_BRIGHTNESS              = 4; // 1-255
-const uint8_t COLOR_INHALE[3]             = {0, 255, 0};
-const uint8_t COLOR_EXHALE[3]             = {255, 165, 0};
-const uint8_t COLOR_HOLD[3]               = {255, 0, 0};
-const uint8_t COLOR_BATTERY_INDICATOR[3]  = {200, 200, 200};
-const uint8_t COLOR_EXERCISE_INDICATOR[3] = {200, 200, 200};
+//            COLOR_TYPE[3]               = {Red: 1-255, Green: 1-255, Blue: 1-255}
+const uint8_t COLOR_INHALE[3]             = {0, 20, 0};      
+const uint8_t COLOR_EXHALE[3]             = {21, 14, 0};
+const uint8_t COLOR_HOLD[3]               = {20, 0, 0};
+const uint8_t COLOR_BATTERY_INDICATOR[3]  = {20, 20, 20};
+const uint8_t COLOR_EXERCISE_INDICATOR[3] = {20, 20, 20};
 // clang-format on
 
 // --- Exercise Setup ---
@@ -136,7 +136,6 @@ void setup() {
   battery.begin();
 
   strip.begin();
-  strip.setBrightness(MAX_BRIGHTNESS);
   strip.show();
   showIndicator();
   lastActivityTime = millis();
