@@ -54,6 +54,7 @@ bool running = false;
 int currentExercise = 0;
 int currentPhase = 0;
 int currentRepeat = 0;
+int batteryLedCount = 0; // Stores the number of lit LEDs for the battery display
 unsigned long startTime = 0;
 unsigned long lastActivityTime = 0;
 unsigned long lastFrameTime = 0;
@@ -62,26 +63,6 @@ unsigned long lastFrameTime = 0;
 void showIndicator() {
   strip.clear();
   strip.setPixelColor(exercises[currentExercise].ledIndex, COLOR_EXERCISE_INDICATOR[0], COLOR_EXERCISE_INDICATOR[1], COLOR_EXERCISE_INDICATOR[2]);
-  strip.show();
-}
-
-void showBatteryLevel() {
-  // Sample voltage 10 times and accumulate
-  float voltageSum = 0.0f;
-  for (int i = 0; i < 10; i++) {
-    voltageSum += battery.GetBatteryVoltage();
-  }
-  // Divide by sample count to get the mean, then scale ×100 and cast to int (e.g. 3.85V → 385)
-  // for use with map(), which operates on integers
-  int voltage = (int)((voltageSum / 10.0f) * 100);
-  // Clamp input before mapping to guarantee map() stays within expected bounds
-  voltage = constrain(voltage, BATTERY_MIN, BATTERY_MAX);
-  // Convert 3.20V–4.20V (320–420) to 1–NUM_LEDS LEDs
-  int numLedsLit = map(voltage, BATTERY_MIN, BATTERY_MAX, 1, NUM_LEDS);
-
-  strip.clear();
-  for (int i = 0; i < numLedsLit; i++)
-    strip.setPixelColor(i, COLOR_BATTERY_INDICATOR[0], COLOR_BATTERY_INDICATOR[1], COLOR_BATTERY_INDICATOR[2]);
   strip.show();
 }
 
@@ -114,8 +95,25 @@ void onModeClick() {
 
 void onModeLongPressStart() {
   if (running) return;
-  showBatteryLevel();
+
+  // Get a single voltage reading, scale ×100, and cast to int (e.g. 3.85V → 385)
+  int voltage = (int)(battery.GetBatteryVoltage() * 100);
+  // Clamp input before mapping to guarantee map() stays within expected bounds
+  voltage = constrain(voltage, BATTERY_MIN, BATTERY_MAX);
+  // Convert 3.20V–4.20V (320–420) to 1–NUM_LEDS LEDs
+  batteryLedCount = map(voltage, BATTERY_MIN, BATTERY_MAX, 1, NUM_LEDS);
+
   lastActivityTime = millis();
+}
+
+void duringModeLongPress() {
+  if (running) return;
+
+  // Continuously render the battery indicator computed in onModeLongPressStart
+  strip.clear();
+  for (int i = 0; i < batteryLedCount; i++)
+    strip.setPixelColor(i, COLOR_BATTERY_INDICATOR[0], COLOR_BATTERY_INDICATOR[1], COLOR_BATTERY_INDICATOR[2]);
+  strip.show();
 }
 
 void onModeLongPressStop() {
@@ -132,6 +130,7 @@ void setup() {
   buttonMode.setup(BUTTON_MODE, INPUT_PULLUP, true);
   buttonMode.attachClick(onModeClick);
   buttonMode.attachLongPressStart(onModeLongPressStart);
+  buttonMode.attachDuringLongPress(duringModeLongPress);
   buttonMode.attachLongPressStop(onModeLongPressStop);
 
   battery.begin();
