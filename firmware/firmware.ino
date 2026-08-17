@@ -9,6 +9,10 @@
 #define NUM_LEDS 9
 #define SLEEP_TIMEOUT 10000 // 10 seconds
 
+// --- Battery Settings ---
+const int BATTERY_MIN = 320; // 3.20V - empty
+const int BATTERY_MAX = 420; // 4.20V - full
+
 // --- User LED Color Settings ---
 // clang-format off
 const uint8_t MAX_BRIGHTNESS              = 4; // 1-255
@@ -18,10 +22,6 @@ const uint8_t COLOR_HOLD[3]               = {255, 0, 0};
 const uint8_t COLOR_BATTERY_INDICATOR[3]  = {200, 200, 200};
 const uint8_t COLOR_EXERCISE_INDICATOR[3] = {200, 200, 200};
 // clang-format on
-
-// --- Battery Settings ---
-const int BATTERY_MIN = 320; // 3.20V - empty
-const int BATTERY_MAX = 420; // 4.20V - full
 
 // --- Exercise Setup ---
 struct Exercise {
