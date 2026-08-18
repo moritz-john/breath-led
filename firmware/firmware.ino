@@ -7,34 +7,9 @@
 #define BUTTON_MODE D5
 #define LED_PIN D9
 #define NUM_LEDS 9
-#define SLEEP_TIMEOUT 10000 // 10 seconds
 
-// --- Battery Settings ---
-const int BATTERY_MIN = 320; // 3.20V - empty
-const int BATTERY_MAX = 420; // 4.20V - full
-
-// --- User LED Color Settings ---
-//            COLOR_TYPE[3]               = {Red: 1-255, Green: 1-255, Blue: 1-255}
-const uint8_t COLOR_INHALE[3]             = {0, 20, 0};
-const uint8_t COLOR_EXHALE[3]             = {21, 14, 0};
-const uint8_t COLOR_HOLD[3]               = {20, 0, 0};
-const uint8_t COLOR_BATTERY_INDICATOR[3]  = {20, 20, 20};
-const uint8_t COLOR_EXERCISE_INDICATOR[3] = {20, 20, 20};
-
-// --- Exercise Setup ---
-struct Exercise {
-  const char *name; // Exercise name
-  int phases[4];    // {Inhale, Hold_In, Exhale, Hold_Out} time in seconds
-  int repeats;      // Number of breath cycles
-  int ledIndex;     // Indicator LED when selecting this exercise
-};
-
-// { "name", {Inhale, Hold_In, Exhale, Hold_Out}, repeats, LedIndex }
-const Exercise exercises[] = {
-    {"4-7-8", {4, 7, 8, 0}, 8,  0},
-    {"Box",   {4, 4, 4, 4}, 20, 4},
-    {"1:5",   {4, 0, 8, 0}, 25, 8},
-};
+// Load user configuration (exercises, colors, sleep settings)
+#include "config.h"
 
 const int NUM_EXERCISE = sizeof(exercises) / sizeof(exercises[0]);
 
