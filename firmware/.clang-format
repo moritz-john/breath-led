@@ -1,2 +1,4 @@
 ColumnLimit: 0
 AllowShortIfStatementsOnASingleLine: WithoutElse
+AlignArrayOfStructures: Left
+AlignConsecutiveAssignments: Consecutive

@@ -14,14 +14,12 @@ const int BATTERY_MIN = 320; // 3.20V - empty
 const int BATTERY_MAX = 420; // 4.20V - full
 
 // --- User LED Color Settings ---
-// clang-format off
 //            COLOR_TYPE[3]               = {Red: 1-255, Green: 1-255, Blue: 1-255}
-const uint8_t COLOR_INHALE[3]             = {0, 20, 0};      
+const uint8_t COLOR_INHALE[3]             = {0, 20, 0};
 const uint8_t COLOR_EXHALE[3]             = {21, 14, 0};
 const uint8_t COLOR_HOLD[3]               = {20, 0, 0};
 const uint8_t COLOR_BATTERY_INDICATOR[3]  = {20, 20, 20};
 const uint8_t COLOR_EXERCISE_INDICATOR[3] = {20, 20, 20};
-// clang-format on
 
 // --- Exercise Setup ---
 struct Exercise {
@@ -33,9 +31,9 @@ struct Exercise {
 
 // { "name", {Inhale, Hold_In, Exhale, Hold_Out}, repeats, LedIndex }
 const Exercise exercises[] = {
-    {"4-7-8", {4, 7, 8, 0}, 8, 0},
-    {"Box", {4, 4, 4, 4}, 20, 4},
-    {"1:5", {4, 0, 8, 0}, 25, 8},
+    {"4-7-8", {4, 7, 8, 0}, 8,  0},
+    {"Box",   {4, 4, 4, 4}, 20, 4},
+    {"1:5",   {4, 0, 8, 0}, 25, 8},
 };
 
 const int NUM_EXERCISE = sizeof(exercises) / sizeof(exercises[0]);
@@ -50,14 +48,14 @@ XiaoBattery battery;
 OneButton buttonStart; // Configured in setup()
 OneButton buttonMode;  // Configured in setup()
 
-bool running = false;
-int currentExercise = 0;
-int currentPhase = 0;
-int currentRepeat = 0;
-int batteryLedCount = 0; // Stores the number of lit LEDs for the battery display
-unsigned long startTime = 0;
+bool running                   = false;
+int currentExercise            = 0;
+int currentPhase               = 0;
+int currentRepeat              = 0;
+int batteryLedCount            = 0; // Stores the number of lit LEDs for the battery display
+unsigned long startTime        = 0;
 unsigned long lastActivityTime = 0;
-unsigned long lastFrameTime = 0;
+unsigned long lastFrameTime    = 0;
 
 // --- Helpers ---
 void showIndicator() {
@@ -76,12 +74,12 @@ void goToSleep() {
 void onStartClick() {
   running = !running;
   // Reset state variables regardless of start/stop for clean next exercise
-  currentPhase = 0;
-  currentRepeat = 0;
+  currentPhase      = 0;
+  currentRepeat     = 0;
   unsigned long now = millis();
-  startTime = now;
-  lastActivityTime = now;
-  lastFrameTime = now;
+  startTime         = now;
+  lastActivityTime  = now;
+  lastFrameTime     = now;
 
   if (!running) showIndicator();
 }
@@ -171,7 +169,7 @@ void loop() {
 
       // Stop the exercise once all configured repeats are complete
       if (currentRepeat >= exercises[currentExercise].repeats) {
-        running = false;
+        running          = false;
         lastActivityTime = millis(); // Reset sleep timer
         showIndicator();
         return;
