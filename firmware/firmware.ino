@@ -4,7 +4,7 @@
 
 // --- Pin & Hardware Config ---
 #define BUTTON_START D8
-#define BUTTON_MODE D5
+#define BUTTON_SELECT D5
 #define LED_PIN D9
 #define NUM_LEDS 9
 
@@ -21,7 +21,7 @@ Adafruit_NeoPixel strip(NUM_LEDS, LED_PIN, NEO_GRB + NEO_KHZ800);
 XiaoBattery battery;
 
 OneButton buttonStart;
-OneButton buttonMode;
+OneButton buttonSelect;
 
 bool running                   = false;
 int currentExercise            = 0;
@@ -60,7 +60,7 @@ void onStartClick() {
   if (!running) showIndicator();
 }
 
-void onModeClick() {
+void onSelectClick() {
   if (running) return;
 
   currentExercise = (currentExercise + 1) % NUM_EXERCISE;
@@ -68,7 +68,7 @@ void onModeClick() {
   lastActivityTime = millis();
 }
 
-void onModeLongPressStart() {
+void onSelectLongPressStart() {
   if (running) return;
 
   // Get a single voltage reading, scale ×100, and cast to int (e.g. 3.85V → 385)
@@ -81,17 +81,17 @@ void onModeLongPressStart() {
   lastActivityTime = millis();
 }
 
-void duringModeLongPress() {
+void duringSelectLongPress() {
   if (running) return;
 
-  // Continuously render the battery indicator computed in onModeLongPressStart
+  // Continuously render the battery indicator computed in onSelectLongPressStart
   strip.clear();
   for (int i = 0; i < batteryLedCount; i++)
     strip.setPixelColor(i, COLOR_BATTERY_INDICATOR[0], COLOR_BATTERY_INDICATOR[1], COLOR_BATTERY_INDICATOR[2]);
   strip.show();
 }
 
-void onModeLongPressStop() {
+void onSelectLongPressStop() {
   if (running) return;
 
   showIndicator();
@@ -103,11 +103,11 @@ void setup() {
   buttonStart.setup(BUTTON_START, INPUT_PULLUP, true);
   buttonStart.attachClick(onStartClick);
 
-  buttonMode.setup(BUTTON_MODE, INPUT_PULLUP, true);
-  buttonMode.attachClick(onModeClick);
-  buttonMode.attachLongPressStart(onModeLongPressStart);
-  buttonMode.attachDuringLongPress(duringModeLongPress);
-  buttonMode.attachLongPressStop(onModeLongPressStop);
+  buttonSelect.setup(BUTTON_SELECT, INPUT_PULLUP, true);
+  buttonSelect.attachClick(onSelectClick);
+  buttonSelect.attachLongPressStart(onSelectLongPressStart);
+  buttonSelect.attachDuringLongPress(duringSelectLongPress);
+  buttonSelect.attachLongPressStop(onSelectLongPressStop);
 
   battery.begin();
 
@@ -123,7 +123,7 @@ void loop() {
   unsigned long now = millis();
 
   buttonStart.tick();
-  buttonMode.tick();
+  buttonSelect.tick();
 
   if (!running) {
     if (now - lastActivityTime > SLEEP_TIMEOUT)
