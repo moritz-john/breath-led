@@ -16,6 +16,12 @@ const int NUM_EXERCISE = sizeof(exercises) / sizeof(exercises[0]);
 // TODO: evaluate battery savings
 const int FRAME_INTERVAL = 50; // ~ 20 FPS (1000ms / 50)
 
+// CENTER finds the symmetric middle of the LED "strip" for measuring distances
+const float CENTER = (NUM_LEDS - 1) / 2.0f;
+// How far the brightness ring needs to grow to fully light the edge LEDs.
+// Edges are CENTER away from the middle, plus one extra step so they end up fully lit (not just reached) by the time the ring finishes expanding.
+const float MAX_RADIUS = CENTER + 1.0f;
+
 // --- Hardware & State ---
 Adafruit_NeoPixel strip(NUM_LEDS, LED_PIN, NEO_GRB + NEO_KHZ800);
 XiaoBattery battery;
@@ -158,7 +164,7 @@ void loop() {
 
     // Runs once per breathing phase transition
     startTime += duration; // exact phase length, not "= now"; prevents drift from late ticks
-    // Exit now: rendering below still has the OLD duration (e.g. 4000ms for INHALE) even though currentPhase just became HOLD_IN. 
+    // Exit now: rendering below still has the OLD duration (e.g. 4000ms for INHALE) even though currentPhase just became HOLD_IN.
     // Next loop() call recomputes duration (e.g. 1000ms) to match, then renders.
     return;
   }
@@ -175,20 +181,24 @@ void loop() {
 
     strip.clear();
 
-    if (currentPhase == 0) { // INHALE: wave fills left to right
+    if (currentPhase == 0) { // INHALE: brightness ring expands outward from the center LED
 
-      // Maps progress to a continuous position on the strip (0.0 -> NUM_LEDS).
+      // Maps progress to a continuous radius growing outward from the center LED (0.0 -> MAX_RADIUS).
       // The fractional part of this number creates the smooth transition.
-      // Example: At 4.5, LED 4 is 50% lit. At exactly 4.0, LEDs 0-3 are fully lit and 4+ are completely off.
-      float ledProgress = progress * NUM_LEDS;
+      // Example: At radius 1.5, the center LED (distance 0) is fully lit, the LED one step out
+      // (distance 1) is 50% lit, and LEDs farther away are still off.
+      float radius = progress * MAX_RADIUS;
 
       for (int i = 0; i < NUM_LEDS; i++) {
 
-        // Calculate brightness for this specific LED (i):
-        // < 0.0 : wave hasn't reached it yet (Off)
-        // 0 - 1 : wave is currently passing over it (Partial brightness)
-        // > 1.0 : wave has fully passed it (Fully lit)
-        float intensity = constrain(ledProgress - i, 0.0f, 1.0f);
+        // How far this LED is from the center LED (symmetric on both sides)
+        float distance = abs(i - CENTER);
+
+        // Calculate brightness for this specific LED (i) alone, by comparing its own distance to the current radius
+        // < 0.0 : radius hasn't reached this LED yet (Off)
+        // 0 - 1 : radius is currently passing this LED's distance (Partial brightness)
+        // > 1.0 : radius has grown past this LED already (Fully lit)
+        float intensity = constrain(radius - distance, 0.0f, 1.0f);
 
         strip.setPixelColor(i,
                             round(COLOR_INHALE[0] * intensity),
@@ -202,25 +212,29 @@ void loop() {
           strip.setPixelColor(i, COLOR_HOLD[0], COLOR_HOLD[1], COLOR_HOLD[2]);
       }
 
-    } else if (currentPhase == 2) { // EXHALE: wave drains right to left
+    } else if (currentPhase == 2) { // EXHALE: brightness ring shrinks from the edges back to the center
 
-      // Same continuous position logic as INHALE, but the progress value is inverted (1.0 -> 0.0).
-      // The wave shrinks from NUM_LEDS to 0, so the fractional part determines how an LED fades out.
-      // Example: At 4.5, LEDs 5+ are already off, LED 4 is fading (50%), and 0-3 remain lit.
-      float ledProgress = (1.0f - progress) * NUM_LEDS;
+      // Same continuous radius logic as INHALE, but the progress value is inverted (1.0 -> 0.0).
+      // The ring shrinks from MAX_RADIUS down to 0, so the fractional part determines how each LED fades out.
+      // Example: At radius 1.5, LEDs farther than distance 1 from center are already off, the LED at
+      // distance 1 is fading (50% lit), and the center LED (distance 0) is still fully lit.
+      float radius = (1.0f - progress) * MAX_RADIUS;
 
       for (int i = 0; i < NUM_LEDS; i++) {
 
-        // Calculate brightness for this specific LED (i) as the wave recedes:
-        // < 0.0 : wave has already drained past it (Off)
-        // 0 - 1 : wave is currently draining over it (Fading out based on the fraction)
-        // > 1.0 : wave hasn't drained past it yet (Still fully lit)
-        float intensity = constrain(ledProgress - i, 0.0f, 1.0f);
+        // How far this LED is from the center LED (symmetric on both sides)
+        float distance = abs(i - CENTER);
+
+        // Calculate brightness for this specific LED (i) as the radius shrinks
+        // < 0.0 : radius has already shrunk past this LED (Off)
+        // 0 - 1 : radius is currently receding through this LED's distance (Fading out based on the fraction)
+        // > 1.0 : radius hasn't shrunk past this LED yet (Still fully lit)
+        float intensity = constrain(radius - distance, 0.0f, 1.0f);
 
         strip.setPixelColor(i,
                             // round() so low channel values like {0,0,1} still light even below intensity 1.0;
                             // without it, values just below 1.0 truncate to 0 instead.
-                            // e.g. with {0,0,1}, LED i=8 at EXHALE start could go straight to off.
+                            // e.g. with {0,0,1}, an edge LED at EXHALE start could go straight to off.
                             round(COLOR_EXHALE[0] * intensity),
                             round(COLOR_EXHALE[1] * intensity),
                             round(COLOR_EXHALE[2] * intensity));
@@ -250,7 +264,9 @@ void loop() {
 //     └─ If FRAME_INTERVAL elapsed:
 //         ├─ Compute progress (0.0→1.0)
 //         ├─ Execute phase-specific rendering, each branch looping LED i (0 to NUM_LEDS):
-//         │   ├─ Inhale: map progress UP to ledProgress (0→NUM_LEDS), calculate intensity, set color (see inline comments)
-//         │   ├─ Exhale: map progress DOWN to ledProgress (NUM_LEDS→0), calculate intensity, set color (see inline comments)
+//         │   ├─ Inhale: map progress to a growing radius (0→MAX_RADIUS), calculate each LED's
+//         │   │   intensity from its distance to center, set color (see inline comments)
+//         │   ├─ Exhale: map progress to a shrinking radius (MAX_RADIUS→0), calculate each LED's
+//         │   │   intensity from its distance to center, set color (see inline comments)
 //         │   └─ Hold In/Out: even (i%2==0) / odd (i%2!=0) LEDs at full COLOR_HOLD
 //         └─ strip.show() after all LEDs are set pushes the new colors at once
