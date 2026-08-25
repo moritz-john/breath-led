@@ -20,19 +20,19 @@ const int FRAME_INTERVAL = 50; // ~ 20 FPS (1000ms / 50)
 Adafruit_NeoPixel strip(NUM_LEDS, LED_PIN, NEO_GRB + NEO_KHZ800);
 XiaoBattery battery;
 
-OneButton buttonStart; // Configured in setup()
-OneButton buttonMode;  // Configured in setup()
+OneButton buttonStart;
+OneButton buttonMode;
 
 bool running                   = false;
 int currentExercise            = 0;
 int currentPhase               = 0;
 int currentRepeat              = 0;
-int batteryLedCount            = 0; // Stores the number of lit LEDs for the battery display
+int batteryLedCount            = 0;
 unsigned long startTime        = 0;
 unsigned long lastActivityTime = 0;
 unsigned long lastFrameTime    = 0;
 
-// --- Helpers ---
+// --- Helper functions ---
 void showIndicator() {
   strip.clear();
   strip.setPixelColor(exercises[currentExercise].ledIndex, COLOR_EXERCISE_INDICATOR[0], COLOR_EXERCISE_INDICATOR[1], COLOR_EXERCISE_INDICATOR[2]);
@@ -45,9 +45,10 @@ void goToSleep() {
   delay(50);
 }
 
-// --- Button Callbacks ---
+// --- Button callback functions ---
 void onStartClick() {
   running = !running;
+
   // Reset state variables regardless of start/stop for clean next exercise
   currentPhase      = 0;
   currentRepeat     = 0;
@@ -61,6 +62,7 @@ void onStartClick() {
 
 void onModeClick() {
   if (running) return;
+
   currentExercise = (currentExercise + 1) % NUM_EXERCISE;
   showIndicator();
   lastActivityTime = millis();
@@ -91,6 +93,7 @@ void duringModeLongPress() {
 
 void onModeLongPressStop() {
   if (running) return;
+
   showIndicator();
   lastActivityTime = millis();
 }
@@ -110,6 +113,7 @@ void setup() {
 
   strip.begin();
   strip.show();
+
   showIndicator();
   lastActivityTime = millis();
 }
@@ -130,6 +134,7 @@ void loop() {
   // 1) Logic Phase: Always runs
   // Get the duration of the current phase in milliseconds to match millis()
   unsigned long duration = exercises[currentExercise].phases[currentPhase] * 1000L;
+
   // Check whether the current breath phase duration has elapsed
   if (now - startTime >= duration) {
 
@@ -151,49 +156,77 @@ void loop() {
       }
     }
 
-    startTime += duration; // += duration, not = now: exact phase length prevents late-tick error from accumulating
-    return;                // Skip rendering here - let the next loop() tick draw the fresh phase
+    // Runs once per breathing phase transition
+    startTime += duration; // exact phase length, not "= now"; prevents drift from late ticks
+    // Exit now: rendering below still has the OLD duration (e.g. 4000ms for INHALE) even though currentPhase just became HOLD_IN. 
+    // Next loop() call recomputes duration (e.g. 1000ms) to match, then renders.
+    return;
   }
 
   // 2) Rendering Phase: Capped to FRAME_INTERVAL
   if (now - lastFrameTime >= FRAME_INTERVAL) {
     lastFrameTime = now;
 
-    // Normalized 0.0→1.0 progress through the current breath phase, used for LED animation below; only computed if still active
+    // Normalized 0.0→1.0 progress through the current breath phase, used for LED animation below
+    // Example: 4s Inhale (duration = 4000ms):
+    //   now = 1000ms → progress = 0.25 (25% done)
+    //   now = 1300ms → progress = 0.325 (32.5% done)
     float progress = (float)(now - startTime) / duration;
 
     strip.clear();
 
-    if (currentPhase == 0) { // INHALE - wave fills left to right
+    if (currentPhase == 0) { // INHALE: wave fills left to right
+
+      // Maps progress to a continuous position on the strip (0.0 -> NUM_LEDS).
+      // The fractional part of this number creates the smooth transition.
+      // Example: At 4.5, LED 4 is 50% lit. At exactly 4.0, LEDs 0-3 are fully lit and 4+ are completely off.
       float ledProgress = progress * NUM_LEDS;
-      // loop through each LED and compute intensity based on distance from ledProgress
+
       for (int i = 0; i < NUM_LEDS; i++) {
-        // Clamps negatives (LED not reached yet) to 0 (off); caps >1 to 1 so multiplying by 255 stays in uint8_t bounds; 0–1 is between min and max brightness
+
+        // Calculate brightness for this specific LED (i):
+        // < 0.0 : wave hasn't reached it yet (Off)
+        // 0 - 1 : wave is currently passing over it (Partial brightness)
+        // > 1.0 : wave has fully passed it (Fully lit)
         float intensity = constrain(ledProgress - i, 0.0f, 1.0f);
+
         strip.setPixelColor(i,
                             round(COLOR_INHALE[0] * intensity),
                             round(COLOR_INHALE[1] * intensity),
                             round(COLOR_INHALE[2] * intensity));
       }
 
-    } else if (currentPhase == 1) { // HOLD_IN - even-indexed LEDs lit
+    } else if (currentPhase == 1) { // HOLD_IN: even-indexed LEDs lit
       for (int i = 0; i < NUM_LEDS; i++) {
         if (i % 2 == 0)
           strip.setPixelColor(i, COLOR_HOLD[0], COLOR_HOLD[1], COLOR_HOLD[2]);
       }
 
-    } else if (currentPhase == 2) { // EXHALE - wave drains right to left
+    } else if (currentPhase == 2) { // EXHALE: wave drains right to left
+
+      // Same continuous position logic as INHALE, but the progress value is inverted (1.0 -> 0.0).
+      // The wave shrinks from NUM_LEDS to 0, so the fractional part determines how an LED fades out.
+      // Example: At 4.5, LEDs 5+ are already off, LED 4 is fading (50%), and 0-3 remain lit.
       float ledProgress = (1.0f - progress) * NUM_LEDS;
+
       for (int i = 0; i < NUM_LEDS; i++) {
-        // Mirrors inhale but reversed; same clamping logic applies
+
+        // Calculate brightness for this specific LED (i) as the wave recedes:
+        // < 0.0 : wave has already drained past it (Off)
+        // 0 - 1 : wave is currently draining over it (Fading out based on the fraction)
+        // > 1.0 : wave hasn't drained past it yet (Still fully lit)
         float intensity = constrain(ledProgress - i, 0.0f, 1.0f);
+
         strip.setPixelColor(i,
+                            // round() so low channel values like {0,0,1} still light even below intensity 1.0;
+                            // without it, values just below 1.0 truncate to 0 instead.
+                            // e.g. with {0,0,1}, LED i=8 at EXHALE start could go straight to off.
                             round(COLOR_EXHALE[0] * intensity),
                             round(COLOR_EXHALE[1] * intensity),
                             round(COLOR_EXHALE[2] * intensity));
       }
 
-    } else { // HOLD_OUT (currentPhase == 3) - odd-indexed LEDs lit
+    } else { // (currentPhase == 3) HOLD_OUT : odd-indexed LEDs lit
       for (int i = 0; i < NUM_LEDS; i++) {
         if (i % 2 != 0)
           strip.setPixelColor(i, COLOR_HOLD[0], COLOR_HOLD[1], COLOR_HOLD[2]);
@@ -207,37 +240,17 @@ void loop() {
 // loop() tick:
 // │
 // ├─ [1] LOGIC PHASE (uncapped - runs every tick for timing precision)
-// │   ├─ Compute phase duration
-// │   └─ Phase elapsed?
-// │       ├─ Advance phase (skip zero-duration phases, wrap 3 → 0)
-// │       ├─ Full cycle done? → increment repeat, check if finished
-// │       └─ startTime += duration → return (skip render this tick)
+// │   ├─ Compute phase duration and check if elapsed
+// │   └─ If elapsed:
+// │       ├─ Advance phase (skipping 0s phases), increment repeats if cycle complete
+// │       ├─ If finished (all repeats done): stop running and return early (skip startTime update)
+// │       └─ Otherwise: update startTime
 // │
 // └─ [2] RENDERING PHASE (capped to FRAME_INTERVAL)
-//     └─ Frame interval elapsed?
+//     └─ If FRAME_INTERVAL elapsed:
 //         ├─ Compute progress (0.0→1.0)
-//         └─ for each LED i (0..NUM_LEDS, sequential, one LED at a time):
-//             │   calculate intensity = clamp(ledProgress - i, 0, 1)
-//             │   where ledProgress = progress * NUM_LEDS (how far the wave has travelled)
-//             │   → intensity < 0:  i (this LED's position) is ahead of the wave → clamped to 0 (off)
-//             │   → intensity 0–1:  i (this LED's position) is right at the wave → partial brightness
-//             │   → intensity > 1:  i (this LED's position) is behind the wave   → clamped to 1 (full brightness)
-//             ├─ Inhale/Exhale: wave moves 0→N / N→0, setPixelColor using calculated intensity
-//             ├─ Hold In/Out   : alternate even (i%2==0) / odd (i%2!=0) LEDs at full COLOR_HOLD
-//             └─ strip.show() after the for-loop above → pushes all 9 LEDs' new colors to the strip at once
-
-// Example: 4s Inhale across 9 LEDs (duration = 4000ms, NUM_LEDS = 9):
-// 0% Done (now = 0ms) → progress = 0.0 → ledProgress = 0.0
-//   LED 0    : clamp(0.0 - 0, 0, 1) = 0.0 (Off)
-//   LED 1    : clamp(0.0 - 1, 0, 1) = 0.0 (Off)
-//   LED 2..8 : clamp(0.0 - i, 0, 1) = 0.0 (Off)
-// 25% Done (now = 1000ms) → progress = 0.25 → ledProgress = 2.25
-//   LED 0 & 1: clamp(2.25 - i, 0, 1) = 1.0 (Fully Lit)
-//   LED 2    : clamp(2.25 - 2, 0, 1) = 0.25 (Quarter Bright)
-//   LED 3..8 : clamp(2.25 - i, 0, 1) = 0.0 (Off)
-// 50% Done (now = 2000ms) → progress = 0.50 → ledProgress = 4.5
-//   LED 0..3 : clamp(4.5 - i, 0, 1) = 1.0 (Fully Lit)
-//   LED 4    : clamp(4.5 - 4, 0, 1) = 0.5 (Half Bright)
-//   LED 5..8 : clamp(4.5 - i, 0, 1) = 0.0 (Off)
-// 100% Done (now = 4000ms) → progress = 1.00 → ledProgress = 9.0
-//   All LEDs (0..8) yield intensity >= 1.0 → clamped to 1.0 (All Lit)
+//         ├─ Execute phase-specific rendering, each branch looping LED i (0 to NUM_LEDS):
+//         │   ├─ Inhale: map progress UP to ledProgress (0→NUM_LEDS), calculate intensity, set color (see inline comments)
+//         │   ├─ Exhale: map progress DOWN to ledProgress (NUM_LEDS→0), calculate intensity, set color (see inline comments)
+//         │   └─ Hold In/Out: even (i%2==0) / odd (i%2!=0) LEDs at full COLOR_HOLD
+//         └─ strip.show() after all LEDs are set pushes the new colors at once
