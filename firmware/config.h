@@ -24,9 +24,9 @@ const Exercise exercises[] = {
 // Edit the {Red, Green, Blue} values (0-255) to change colors
 // Higher values -> brighter, with a smoother inhale/exhale fade
 //            COLOR_TYPE[3]               = {1-255, 1-255, 1-255}
-const uint8_t COLOR_INHALE[3]             = {0, 20, 0};
-const uint8_t COLOR_EXHALE[3]             = {21, 14, 0};
-const uint8_t COLOR_HOLD[3]               = {20, 0, 0};
+const uint8_t COLOR_INHALE[3]             = {0, 20, 5};
+const uint8_t COLOR_EXHALE[3]             = {24, 6, 6};
+const uint8_t COLOR_HOLD[3]               = {21, 12, 0};
 const uint8_t COLOR_EXERCISE_INDICATOR[3] = {20, 20, 20};
 const uint8_t COLOR_BATTERY_INDICATOR[3]  = {0, 0, 10};
 
