@@ -12,7 +12,7 @@ H1,M2,MountingHole_2.2mm_M2,105.0,-55.0,0.0,top
 H2,M2,MountingHole_2.2mm_M2,175.0,-55.0,0.0,top
 H3,M2,MountingHole_2.2mm_M2,175.0,-95.0,0.0,top
 H4,M2,MountingHole_2.2mm_M2,105.0,-95.0,0.0,top
-J1,Battery Pad,cell_pads,112.5,-62.5,315.0,bottom
+J1,Battery Pad,cell_pads,112.0,-75.0,180.0,bottom
 Logo1,breath-led-f,breath-led-logo,140.0,-55.0,0.0,top
 Logo2,breath-led-b,breath-led-logo,140.0,-55.0,0.0,bottom
 R1,470,R_1206_3216Metric_Pad1.30x1.75mm_HandSolder,123.5,-86.76,180.0,top
@@ -22,4 +22,3 @@ SW3,SKQGAFE010,SW_SPST_SKQG_WithStem,167.5,-62.5,-45.0,top
 TP1,LED_VDD,TestPoint_Pad_D1.5mm,121.5,-84.22,0.0,bottom
 TP2,LED_DIN,TestPoint_Pad_D1.5mm,121.5,-89.3,0.0,bottom
 TP3,GND,TestPoint_Pad_D1.5mm,121.5,-94.38,0.0,bottom
-U1,xiao-RP2350-simplified,xiao-smd-simplified-battery-pad-cutout,140.0,-89.3,180.0,top
