@@ -126,10 +126,10 @@ void setup() {
 
 // --- Loop ---
 void loop() {
-  unsigned long now = millis();
-
   buttonStart.tick();
   buttonSelect.tick();
+
+  unsigned long now = millis();
 
   if (!running) {
     if (now - lastActivityTime > SLEEP_TIMEOUT)
