@@ -144,16 +144,19 @@ void loop() {
   // Check whether the current breath phase duration has elapsed
   if (now - startTime >= duration) {
 
-    // Advance at least once, then keep skipping any zero-duration phases (e.g. HOLD_IN = 0 seconds)
-    do {
-      currentPhase = (currentPhase + 1) % 4; // % 4 wraps 3→0 to keep cycling
-    } while (exercises[currentExercise].phases[currentPhase] == 0);
+    // Find the next phase with a non-zero duration (zero-duration phases are skipped).
+    // The loop is bounded to 4 steps, so it always terminates.
+    int nextPhase = currentPhase;
+    for (int i = 0; i < 4; i++) {
+      nextPhase = (nextPhase + 1) % 4; // wraps 3→0
+      if (exercises[currentExercise].phases[nextPhase] != 0) break;
+    }
 
-    // Wrapped back to Inhale (phase 0) → one full breath cycle just finished
-    if (currentPhase == 0) {
+    // The next phase is not after the current one → we wrapped around, so one full cycle finished
+    if (nextPhase <= currentPhase) {
       currentRepeat++;
 
-      // Stop the exercise once all configured repeats are complete
+      // Stop once all configured repeats are complete
       if (currentRepeat >= exercises[currentExercise].repeats) {
         running          = false;
         lastActivityTime = millis(); // Reset sleep timer
@@ -162,10 +165,11 @@ void loop() {
       }
     }
 
-    // Runs once per breathing phase transition
+    currentPhase = nextPhase;
+
     startTime += duration; // exact phase length, not "= now"; prevents drift from late ticks
-    // Exit now: rendering below still has the OLD duration (e.g. 4000ms for INHALE) even though currentPhase just became HOLD_IN.
-    // Next loop() call recomputes duration (e.g. 1000ms) to match, then renders.
+    // Return here: `duration` belongs to the phase that just ended, so rendering with it would be wrong. 
+    // The next loop() call recomputes it for the new phase.
     return;
   }
 
@@ -260,7 +264,7 @@ void loop() {
 // ├─ [1] LOGIC PHASE (uncapped - runs every tick for timing precision)
 // │   ├─ Compute phase duration and check if elapsed
 // │   └─ If elapsed:
-// │       ├─ Advance phase (skipping 0s phases); if this completes a full cycle, increment repeats
+// │       ├─ Find the next non-zero phase; if that wraps past the end of the cycle, increment repeats
 // │       ├─ If whole exercise finished (repeat count reached): stop running and return early
 // │       └─ Otherwise: update startTime
 // │
