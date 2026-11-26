@@ -140,7 +140,7 @@ For the case you have two options:
 **2) Customize it yourself:** open the [Onshape CAD document](https://cad.onshape.com/documents/17a89b1f610bcf595d942b08/w/729c4b01326213feb876c401/e/a91b596c0664b3db5323eb57) and customize the case to include a simple integrated battery holder via the Configurations area top-left.
 
 <p align="center">
-  <img src="assets/battery_configurations_onshape.png" alt="Battery configurations in Onshape" width="400">
+  <img src="assets/battery_configurations_onshape.png" alt="Battery configurations in Onshape" width="90%">
 </p>
 
 Measure your actual battery dimensions with calipers and add some clearance!
@@ -152,7 +152,7 @@ For example, these are the dimensions I used for two LiPo batteries:
 | 503030, 3.7 V, 400 mAh |           5.4 mm |          33.1 mm |           30 mm |
 
 <p align="center">
-  <img src="assets/case_battery_holder.jpeg" alt="Simple battery holder integrated into the case bottom" width="400"><br>
+  <img src="assets/case_battery_holder.jpeg" alt="Simple battery holder integrated into the case bottom" width="90%"><br>
   <small><i>Simple battery holder integrated into the case bottom</i></small>
 </p>
 
